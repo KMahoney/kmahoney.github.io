@@ -7,7 +7,7 @@
 /* fonts */
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'helvetica neue', helvetica, arial, 'lucida grande', sans-serif;
     font-weight: 400;
     font-size: 100%;
     line-height: 1.6;
@@ -132,4 +132,7 @@ ul { list-style: none; }
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-p { text-align: justify; }
+.article ul {
+    list-style: circle;
+    margin-left: 2em;
+}
