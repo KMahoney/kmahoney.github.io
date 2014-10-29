@@ -136,3 +136,7 @@ a:hover { text-decoration: underline; }
     list-style: circle;
     margin-left: 2em;
 }
+
+.article h1, .article h2 {
+    margin-top: 1.6em;
+}
