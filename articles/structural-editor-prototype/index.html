@@ -30,6 +30,7 @@
 <p><img style="float: right; margin: 0.2em 0em 0em 2em;" src="/img/articles/ambiguous.png" /> Structural editing is not a new idea, but it has never really taken hold. So, what are the advantages of structural editing? Why hasn't it caught on?</p>
 <p>With a plain text representation you don't always have a nice AST to work with and meaning can be ambiguous. It's not an unsolvable problem, and text editors can actually do a good job what I'm going to show you. None of these things are impossible with traditional text editing, but it <em>does</em> make the problem harder. I believe structural editing has a lot of potential.</p>
 <h2 id="the-prototype">The Prototype</h2>
+<img style="width: 42em;" src="/img/articles/sample.png" />
 <p>This is a rough prototype with no performance optimisation. Play around with it. Try to write a map and filter function.</p>
 <p>The language itself is a very simple lisp-like language with type inference. There are no strings (which pose an interesting UI problem), only numbers and functions.</p>
 <p>The advantage here, as I hope you can see from the video above, is continuous feedback. On every keystroke the editor auto-completes, infers types, pops up error messages and lays out the expressions. The errors are precisely pointed out in the syntax tree.</p>
