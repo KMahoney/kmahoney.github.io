@@ -114,6 +114,7 @@ body {
 .message-box {
     display: inline-block;
     position: relative;
+    margin-right: 0.5em;
 }
 .message-box > .node {
     margin-right: 0px;
@@ -157,6 +158,7 @@ body {
     background-position: 7px 50%;
     padding: 8px 8px 8px 30px;
     color: #DDD;
+    z-index: 1;
 }
 .message-box.error > .message > .message-text:after {
     border-color: rgba(213, 81, 81, 0);
@@ -164,7 +166,7 @@ body {
 }
 
 .message-box.completions > .message > .message-text {
-    z-index: 1;
+    z-index: 2;
 }
 
 .message-box.completions > .message > .message-text {
@@ -207,10 +209,17 @@ body {
     color: #A33; font-weight: bold; 
 }
 
-#statements .selected {
+.child-selected > .node:not(.selected):not(.empty), .child-selected > .body > .node:not(.empty) {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 1px;
+}
+
+#statements .selected:not(.empty) {
     border: 1px solid #AAA;
     border-radius: 5px;
-    padding: 2px;
+    padding: 1px;
+    box-shadow: 2px 1px 1px black;
 }
 
 .selected:not(.empty) { background-color: #F1EFEF; }
