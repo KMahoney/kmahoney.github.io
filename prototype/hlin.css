@@ -110,6 +110,12 @@ body {
     margin-bottom: 1em;
 }
 
+.popup-disabled {
+    opacity: 0;
+}
+.popup-enabled {
+    opacity: 1;
+}
 
 .message-box {
     display: inline-block;
@@ -131,6 +137,8 @@ body {
     width: 30em;
     margin-top: 12px;
     font-size: 0.8em;
+    transition: opacity 2s;
+    -webkit-transition: opacity 0.2s;
 }
 .message-box .message .message-text {
     border-radius: 5px;
