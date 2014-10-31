@@ -72,21 +72,30 @@ body {
 }
 
 #completions .item { padding: 0.5em; }
-#completions .item.selected { background-color: #EEE; border-radius: 10px; }
+#completions .item .desc { font-size: 0.8em; color: #888; }
+#completions .item .defn-type { font-size: 0.8em; color: #8A8; }
 #completions .item.selected .name { font-weight: bold; }
-#completions .item.selected div { margin: 0.25em 0em; }
+#completions .item.selected .desc { color: #222; }
+#completions .item.selected .defn-type { font-size: 0.8em; color: #4A4; }
+#completions .item.alt1 { background: #EEE; border: 1px solid #EEE; }
+#completions .item.alt2 { background: #DDD; border: 1px solid #DDD; }
+#completions .item.selected { border: 1px solid black;  }
+
 #completions .group {
-    border: 1px solid #EEE;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    margin: 0;
     padding: 10px;
 }
 #completions .group h1 {
     font-size: 0.8em;
-    margin-top: -20px;
-    color: #888;
+    background: #888;
+    color: #DDD;
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px 10px;
+    margin: 0;
 }
-#completions .group h1 span { padding: 0px 10px; background-color: #FFF; }
+#completions .group .item:last-child { border-radius: 0px 0px 10px 10px;  }
+
+
 
 .node {
     margin-right: 0.5em;
@@ -107,29 +116,25 @@ body {
     position: relative;
 }
 .message-box > .node {
+    margin-right: 0px;
+}
+.message-box.error > .node {
     border: 1px solid red;
     border-radius: 5px;
-    margin-right: 0px;
     padding: 2px;
 }
 .message-box .message {
     color: black;
     position: absolute;
     top: 100%;
-    width: 50em;
+    width: 30em;
+    margin-top: 12px;
+    font-size: 0.8em;
 }
 .message-box .message .message-text {
-    background: red;
-    background-image: url(images/error.png);
-    background-repeat: no-repeat;
-    background-position: 7px 50%;
     border-radius: 5px;
     display: inline-block;
-    color: #DDD;
-    font-size: 0.8em;
-    padding: 8px 8px 8px 30px;
     position: relative;
-    margin-top: 12px;
 }
 .message-box .message .message-text:after {
     bottom: 100%;
@@ -140,11 +145,53 @@ body {
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-color: rgba(213, 81, 81, 0);
-    border-bottom-color: red;
     border-width: 5px;
     margin-left: -5px;
 }
+
+.message-box.error > .message > .message-text {
+    padding: 8px 8px 8px 8px;
+    background: red;
+    background-image: url(images/error.png);
+    background-repeat: no-repeat;
+    background-position: 7px 50%;
+    padding: 8px 8px 8px 30px;
+    color: #DDD;
+}
+.message-box.error > .message > .message-text:after {
+    border-color: rgba(213, 81, 81, 0);
+    border-bottom-color: red;
+}
+
+.message-box.completions > .message > .message-text {
+    z-index: 1;
+}
+
+.message-box.completions > .message > .message-text {
+    color: #000;
+}
+.message-box.completions > .message > .message-text:after {
+    border-color: rgba(0, 0, 0, 0);
+    border-bottom-color: #888;
+}
+
+.message-box.completions .item { width: 30em; padding: 10px; }
+.message-box.completions .completion-help {
+    background: #888;
+    color: #DDD;
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px 10px;
+}
+.message-box.completions .item:last-child { border-radius: 0px 0px 10px 10px; }
+.message-box.completions .item.alt1 { background: #EEE; }
+.message-box.completions .item.alt2 { background: #DDD; }
+.message-box.completions .item .desc { color: #888; }
+.message-box.completions .item .completion-type { color: #8A8; }
+.message-box.completions .item.selected-completion { border: 1px solid black; }
+.message-box.completions .item.selected-completion .name { font-weight: bold; }
+.message-box.completions .item.selected-completion .desc { color: #222; }
+.message-box.completions .item.selected-completion .completion-type { color: #4A4; }
+
 
 .message-box .message .message-text .type {
     color: #FFF;
@@ -181,7 +228,6 @@ body {
 .defn { display: inline-block; }
 .indent-body > .body, .defn > .body { margin-left: 1em; }
 
-.defn-type { font-weight: bold; font-size: 0.8em; color: #4A4; }
 .defn-type {
     font-weight: bold;
     font-size: 0.8em;
