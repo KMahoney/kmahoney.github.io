@@ -36,29 +36,19 @@ h1, h2 {
 }
 
 .project {
-    border-left: 0.5em solid black;
-    margin-left: 3em;
+    padding-left: 4em;
 }
 
 .project img {
     position: absolute;
     width: 3em;
     height: 3em;
-    margin: -0.5em 0em 0em -1.75em;
-}
-
-.project:last-child {
-    border-left: 0.5em solid #F9F9F9;
+    margin: 0em 0em 0em -4em;
 }
 
 .project h3 {
     line-height: 1.6em;
-    margin-left: 3em;
     margin-bottom: 0.4em;
-}
-
-.project .description {
-    margin-left: 3em;
 }
 
 p, ul {
@@ -93,24 +83,11 @@ h1, h2 {
 
 @media (max-width: 700px) {
     .project {
-        border: none;
-        margin-left: 0em;
-    }
-
-    .project:last-child {
-        border: none;
+        padding-left: 0em;
     }
 
     .project img {
         display: none;
-    }
-
-    .project h3 {
-        margin-left: 0em;
-    }
-
-    .project .description {
-        margin-left: 0em;
     }
 }
 
@@ -122,8 +99,8 @@ h1, h2, h3, h4 { color: #000; }
 h1, h2 { border-bottom: 1px solid #AAA; }
 
 body {
-    background-color: #F9F9F9;
-    color: #222;
+    background-color: white;
+    color: #555;
 }
 
 a { color: #37A; }
