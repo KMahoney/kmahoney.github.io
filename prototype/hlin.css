@@ -60,41 +60,65 @@ body {
     padding-left: 23em;
 }
 
-#completions {
+#sidebar {
     position: fixed;
     width: 20em;
     left: 0;
     top: 0;
     bottom: 0;
     border-right: 1px solid #EEE;
-    padding: 1em;
     overflow-y: scroll;
 }
+#sidebar h1 {
+    font-size: 1em;
+    background: #CCC;
+    padding: 0.5em;
+    margin: 0;
+}
+#projects {
+    margin-bottom: 1em;
+}
+#projects a {
+    color: #555;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+}
+#projects a.selected {
+    color: #111;
+    font-weight: bold;
+}
 
-#completions .item { padding: 0.5em; }
-#completions .item .desc { font-size: 0.8em; color: #888; }
-#completions .item .defn-type { font-size: 0.8em; color: #8A8; }
-#completions .item.selected .name { font-weight: bold; }
-#completions .item.selected .desc { color: #222; }
-#completions .item.selected .defn-type { font-size: 0.8em; color: #4A4; }
-#completions .item.alt1 { background: #EEE; border: 1px solid #EEE; }
-#completions .item.alt2 { background: #DDD; border: 1px solid #DDD; }
-#completions .item.selected { border: 1px solid black;  }
+.completions .item { padding: 0.5em; min-height: 3em; }
+.completions .item .arg { font-size: 0.8em; color: #888; margin-left: 0.5em; }
+.completions .item .desc { font-size: 0.8em; color: #888; }
+.completions .item .group { font-size: 0.8em; color: #888; }
+.completions .item .defn-type { font-size: 0.8em; color: #8A8; }
+.completions .item.alt1 { background: #EEE; border: 1px solid #EEE; }
+.completions .item.alt2 { background: #DDD; border: 1px solid #DDD; }
+
+.completions .item.selected-completion { border: 1px solid black;  }
+.completions .item.selected-completion .name { font-weight: bold; }
+.completions .item.selected-completion .arg { font-weight: normal; }
+.completions .item.selected-completion .desc { color: #222; }
+.completions .item.selected-completion .defn-type { font-size: 0.8em; color: #4A4; }
+
+.completions .item.faded .name { color: #999; }
+.completions .item.faded .arg { color: #AAA; }
+.completions .item.faded .desc { color: #888; }
+.completions .item.faded .defn-type { color: #ACA; }
 
 #completions .group {
     margin: 0;
-    padding: 10px;
+    padding: 0;
 }
 #completions .group h1 {
     font-size: 0.8em;
     background: #888;
     color: #DDD;
-    border-radius: 10px 10px 0px 0px;
     padding: 5px 10px;
     margin: 0;
 }
-#completions .group .item:last-child { border-radius: 0px 0px 10px 10px;  }
-
 
 
 .node {
@@ -136,7 +160,6 @@ body {
     top: 100%;
     width: 30em;
     margin-top: 12px;
-    font-size: 0.8em;
     transition: opacity 2s;
     -webkit-transition: opacity 0.2s;
 }
@@ -160,6 +183,7 @@ body {
 
 .message-box.error > .message > .message-text {
     padding: 8px 8px 8px 8px;
+    font-size: 0.8em;
     background: red;
     background-image: url(images/error.png);
     background-repeat: no-repeat;
@@ -185,23 +209,15 @@ body {
     border-bottom-color: #888;
 }
 
-.message-box.completions .item { width: 30em; padding: 10px; }
+.message-box.completions .item { width: 30em; }
+
 .message-box.completions .completion-help {
     background: #888;
     color: #DDD;
-    border-radius: 10px 10px 0px 0px;
     padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.8em;
 }
-.message-box.completions .item:last-child { border-radius: 0px 0px 10px 10px; }
-.message-box.completions .item.alt1 { background: #EEE; }
-.message-box.completions .item.alt2 { background: #DDD; }
-.message-box.completions .item .desc { color: #888; }
-.message-box.completions .item .completion-type { color: #8A8; }
-.message-box.completions .item.selected-completion { border: 1px solid black; }
-.message-box.completions .item.selected-completion .name { font-weight: bold; }
-.message-box.completions .item.selected-completion .desc { color: #222; }
-.message-box.completions .item.selected-completion .completion-type { color: #4A4; }
-
 
 .message-box .message .message-text .type {
     color: #FFF;
@@ -230,6 +246,26 @@ body {
     box-shadow: 2px 1px 1px black;
 }
 
+.result {
+    color: #7A7;
+    margin-top: 0.25em;
+    font-size: 0.8em;
+}
+
+.result:before {
+    content: "↳";
+    margin-right: 0.5em;
+}
+
+.multiline-bindings {
+    display: table;
+}
+
+.multiline-bindings > .node {
+    display: table-cell;
+    padding-left: 0.5em;
+}
+
 .selected:not(.empty) { background-color: #F1EFEF; }
 .symbol.selected .value, .number.selected .value { border-right: 3px solid black; }
 .empty.selected .value { border-left: 3px solid black; }
@@ -250,7 +286,7 @@ body {
     font-size: 0.8em;
     color: #4A4;
 }
-#statements .defn-type {
+#statements .defn-toplevel > .defn-type {
     padding-left: 20px;
     background: url(images/check.png) no-repeat;
 }
