@@ -290,8 +290,4 @@ body {
     padding-left: 20px;
     background: url(images/check.png) no-repeat;
 }
-#statements .no-type {
-    background: url(images/alert.png) no-repeat;
-    height: 18px;
-}
 .defn-type.error { color: #F77; }
