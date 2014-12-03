@@ -1,60 +1,34 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Kevin Mahoney</title>
-    <meta name="description" content="Personal Homepage of Kevin Mahoney">
-    <meta name="author" content="Kevin Mahoney">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style.css">
-  </head>
+---
+layout: article
+---
+<div><iframe width="560" height="315" src="//www.youtube.com/embed/shLQw_ivtfw" frameborder="0" allowfullscreen></iframe></div>
+<div style="margin-bottom: 1.6em;"><a class="cta" href="/prototype">Try it out in your browser!</a></div>
 
-  <body>
-    <div id="main">
-      <section class="contact">
-        <a href="http://kevinmahoney.co.uk"><img src="/img/home.png" /></a>
-        <a href="mailto:kevin@kevinmahoney.co.uk"><img src="/img/email.png" /></a>
-        <a href="http://github.com/KMahoney"><img src="/img/github-circle.png" /></a>
-        <a href="http://twitter.com/KPMTechnically"><img src="/img/twitter-box.png" /></a>
-      </section>
-
-      <section>
-        <article class="article">
-
-          <div><iframe width="560" height="315" src="//www.youtube.com/embed/shLQw_ivtfw" frameborder="0" allowfullscreen></iframe></div>
-          <div style="margin-bottom: 1.6em;"><a class="cta" href="/prototype">Try it out in your browser!</a></div>
-
-          <h1 id="structural-editing">Structural Editing</h1>
-          <p>Structural editing is not a new idea, but it has never really taken hold. So, what are the advantages of structural editing? Why hasn't it caught on?</p>
-          <p>With a plain text representation you don't always have a nice AST to work with and meaning can be ambiguous. It's not an unsolvable problem, and text editors can actually do a good job what I'm going to show you. None of these things are impossible with traditional text editing, but it <em>does</em> make the problem harder. I believe structural editing has a lot of potential.</p>
-          <h2 id="what-can-the-prototype-do">What Can The Prototype Do?</h2>
-          <p><img style="width: 100%;" src="/img/articles/sample.png" /></p>
-          <p><strong>No whitespace needed</strong> - the editor lays out your syntax tree as you type. No tabs or spaces debate, and you can use a proportional font!</p>
-          <p><strong>As-you-type type inference</strong> - as soon as you complete a function, you can see its most general type. No need to wait for a compile cycle.</p>
-          <p><strong>Documentation and autocompletion</strong> - at any point in the tree you can see every valid function or local variable, along with its type and documentation. These are grouped by category.</p>
-          <p><img style="width: 70%;" src="/img/articles/sample-error.png" /></p>
-          <p><strong>As-you-type inline syntax and type error messages</strong> - show exactly where in the code the problem is.</p>
-          <p>This is a rough prototype with no performance optimisation. Play around with it. Try to write a map and filter function.</p>
-          <p>The language itself is a very simple typed lisp-like language. There are no strings (which pose an interesting UI problem), only numbers and functions.</p>
-          <p>The advantage here, as I hope you can see from the video above, is continuous feedback. On every keystroke the editor auto-completes, infers types, pops up error messages and lays out the expressions.</p>
-          <h2 id="the-downside">The Downside</h2>
-          <p>One downside to structural editing is tooling. Programmer tools, like grep and git, have been developed for text. They will have to be reworked for an AST representation, and there are a <em>lot</em> of man-hours invested in these tools. Some of them have been in use for decades. There is an upside: we have a bit more information to work with. For example, we can merge trees instead of lines.</p>
-          <h2 id="future-work">Future Work</h2>
-          <ul>
-              <li>Optimisation</li>
-              <li>Projects</li>
-              <li>Extending the language with user defined data types and pattern matching</li>
-              <li>Strings. Possibly syntax highlighted for embedded HTML/SQL/etc.</li>
-              <li>Compilation to Javascript</li>
-              <li>Evaluation/REPL</li>
-              <li>Data structures</li>
-              <li>Modules</li>
-              <li>Undo history</li>
-          </ul>
-          <p>If you have questions, feel free to <a href="mailto:kevin@kevinmahoney.co.uk">contact me</a></p>
-
-        </article>
-      </section>
-    </div>
-  </body>
-</html>
+<h1 id="structural-editing">Structural Editing</h1>
+<p>Structural editing is not a new idea, but it has never really taken hold. So, what are the advantages of structural editing? Why hasn't it caught on?</p>
+<p>With a plain text representation you don't always have a nice AST to work with and meaning can be ambiguous. It's not an unsolvable problem, and text editors can actually do a good job with what I'm going to show you. None of these things are impossible with traditional text editing, but it <em>does</em> make the problem harder. I believe structural editing has a lot of potential.</p>
+<h2 id="what-can-the-prototype-do">What Can The Prototype Do?</h2>
+<p><img style="width: 100%;" src="/img/articles/sample.png" /></p>
+<p><strong>No whitespace needed</strong> - the editor lays out your syntax tree as you type. No tabs or spaces debate, and you can use a proportional font!</p>
+<p><strong>As-you-type type inference</strong> - as soon as you complete a function, you can see its most general type. No need to wait for a compile cycle.</p>
+<p><strong>Documentation and autocompletion</strong> - at any point in the tree you can see every valid function or local variable, along with its type and documentation. These are grouped by category.</p>
+<p><img style="width: 70%;" src="/img/articles/sample-error.png" /></p>
+<p><strong>As-you-type inline syntax and type error messages</strong> - show exactly where in the code the problem is.</p>
+<p>This is a rough prototype with no performance optimisation. Play around with it. Try to write a map and filter function.</p>
+<p>The language itself is a very simple typed lisp-like language. There are no strings (which pose an interesting UI problem), only numbers and functions.</p>
+<p>The advantage here, as I hope you can see from the video above, is continuous feedback. On every keystroke the editor auto-completes, infers types, pops up error messages and lays out the expressions.</p>
+<h2 id="the-downside">The Downside</h2>
+<p>One downside to structural editing is tooling. Programmer tools, like grep and git, have been developed for text. They will have to be reworked for an AST representation, and there are a <em>lot</em> of man-hours invested in these tools. Some of them have been in use for decades. There is an upside: we have a bit more information to work with. For example, we can merge trees instead of lines.</p>
+<h2 id="future-work">Future Work</h2>
+<ul>
+  <li>Optimisation</li>
+  <li>Projects</li>
+  <li>Extending the language with user defined data types and pattern matching</li>
+  <li>Strings. Possibly syntax highlighted for embedded HTML/SQL/etc.</li>
+  <li>Compilation to Javascript</li>
+  <li>Evaluation/REPL</li>
+  <li>Data structures</li>
+  <li>Modules</li>
+  <li>Undo history</li>
+</ul>
+<p>If you have questions, feel free to <a href="mailto:kevin@kevinmahoney.co.uk">contact me</a></p>
