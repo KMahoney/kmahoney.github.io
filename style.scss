@@ -1,0 +1,101 @@
+---
+---
+
+// Reset
+// --------------------------------------------------------------------------------
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul { list-style: none; }
+
+a {
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+}
+
+// Fonts
+// --------------------------------------------------------------------------------
+
+body {
+    font-family: 'helvetica neue', helvetica, arial, 'lucida grande', sans-serif;
+    font-weight: 300;
+    font-size: 100%;
+    line-height: 1.6;
+}
+
+strong, h1, h2, h3, h4 { font-weight: 500; }
+
+
+// Colours
+// --------------------------------------------------------------------------------
+
+body { color: #555; }
+a { color: #37A; }
+h1, h2, h3, h4 { color: #000; }
+
+
+// Headers
+// --------------------------------------------------------------------------------
+
+h1, h2 {
+    margin: 2em 0em 1em 0em; 
+    clear: both;
+    font-size: 1.6em;
+    border-bottom: 1px solid #AAA;
+}
+
+h3, h4 {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+
+// General Layout
+// --------------------------------------------------------------------------------
+
+main {
+    margin: 0px auto;
+    max-width: 42em;
+    padding: 0px 10px;
+}
+
+p, ul { margin-bottom: 0.8em; }
+header { padding: 1.6em 0em 1.6em 0em; }
+
+
+// --------------------------------------------------------------------------------
+
+time { font-size: 0.8em; }
+
+.project {
+    padding-left: 4em;
+
+    img {
+        position: absolute;
+        width: 3em;
+        height: 3em;
+        margin: 0em 0em 0em -4em;
+    }
+
+    h3 {
+        line-height: 1.6em;
+        margin-bottom: 0.4em;
+    }
+}
+
+@media (max-width: 700px) {
+    .project {
+        padding-left: 0em;
+        img { display: none; }
+    }
+}
+
+.article {
+    ul {
+        list-style: circle;
+        margin-left: 2em;
+    }
+}
