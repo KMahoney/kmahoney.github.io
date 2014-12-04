@@ -17,9 +17,7 @@ Despite exclusively using and continuing to use dynamic languages my
 entire career, I'm a type system advocate. I'll try to explain why.
 
 If any of this is inaccurate, let me know and I'll fix it. If I've
-started a flame war somewhere on the internet, I'm sorry. Remove all
-flammable materials, don't get too close, and try not to burn
-yourself.
+started a flame war somewhere on the internet, I'm sorry.
 
 ## The debate has moved on
 
@@ -36,6 +34,14 @@ these languages non-trivially.
 Not to say that the older languages don't have advantages over other
 languages, it's just that these aren't usually what people are
 advocating any more when talking about typed languages.
+
+## You don't need to annotate
+
+Ever since
+[Hindley-Milner](http://en.wikipedia.org/wiki/Hindley–Milner_type_system)
+came in to existence in 1969 we haven't needed to see this:
+
+`std::map<string, char> *example = new std::map<string, char>();`
 
 ## It's not about performance
 
@@ -64,7 +70,7 @@ analysed and type inferred. This is the basis behind projects like
 Facebook's [Flow](http://flowtype.org).
 
 If you could write a program as you would in a dynamic language and
-have it checked for correctness, why *wouldn't* you do this?
+have it checked for correctness, why *wouldn't* you?
 
 ## Not just `TypeError`
 
@@ -107,7 +113,7 @@ list of the resulting type. Which function do I use? Let's find out:
 > I can whip up something in Python quicker than in a typed language.
 
 Maybe so, but I don't believe this is related to the lack of a type
-system.
+system. This is also subject to your relative experience with Python.
 
 Let's see what Facebook says about Flow:
 
@@ -126,13 +132,6 @@ productivity. Sadly, there isn't much science behind this assertion
 
 Many also ignore productivity and speed where types more obviously
 shine: in the long term maintenance of your project.
-
-## Compile times
-
-It's certainly true some languages could use improvement in this area,
-but this isn't something that's intrinsic to type checking. Running
-your test suite or running your program to check your changes can take
-up far more time.
 
 ## Tests cannot do everything a type system can do
 
@@ -155,6 +154,13 @@ More importantly, with a non-optional type system, you can't slack off
 from making your code robust. The type checker will keep you
 honest. You can choose to not write unit tests and your code will
 still run.
+
+## Compile times
+
+It's certainly true some languages could use improvement in this area,
+but this isn't something that's intrinsic to type checking. Running
+your test suite or running your program to check your changes can take
+up far more time.
 
 ## Dynamically typed languages don't have types
 
