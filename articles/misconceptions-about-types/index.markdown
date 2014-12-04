@@ -4,20 +4,20 @@ layout: article
 
 # Misconceptions About Types
 
-Most programmers have made up their minds about this, and for some
-reason get quite passionate about it. It has been the subject of
-heated debate for a long time.
+Most programmers have made up their minds about static/typed vs
+dynamic/untyped languages, and for some reason get quite passionate
+about it.
 
 I'm not going to give you the evil eye if you like to use Python, all
-I'm going to say is if you're going to favour dynamically typed
-languages over statically typed ones at least be aware of what is on
-the other side of the fence.
+I'm going to say is if you're going to favour dynamic languages over
+typed ones at least be aware of what's out there today.
 
 Despite exclusively using and continuing to use dynamic languages my
-entire career, I'm a type system advocate. I'll try to explain why.
+entire career, I'm a type system advocate. Maybe this collection of
+misunderstandings I've seen in the wild will help explain why.
 
-If any of this is inaccurate, let me know and I'll fix it. If I've
-started a flame war somewhere on the internet, I'm sorry.
+Disclaimer: if any of this is inaccurate, let me know and I'll fix
+it. If I've started a flame war somewhere on the internet, I'm sorry.
 
 * [The debate has moved on](#the-debate-has-moved-on)
 * [You don't need to annotate](#you-dont-need-to-annotate)
@@ -49,7 +49,7 @@ advocating any more when talking about typed languages.
 
 Ever since
 [Hindley-Milner](http://en.wikipedia.org/wiki/Hindley–Milner_type_system)
-came in to existence in 1969 we haven't needed to see this:
+came in to existence in 1969 we haven't needed to see this ugliness:
 
 `std::map<string, char> *example = new std::map<string, char>();`
 
@@ -91,8 +91,8 @@ I see this a lot, and I've even seen this misunderstanding in
 scientific literature! Type systems don't only prevent a `TypeError`,
 they're capable of preventing *all* runtime exceptions. In fact, they
 can *prove* (in the mathematical sense) that your program cannot fail
-at runtime, and that it always terminates. That means every typo and
-every misplaced `null` found without even running your program.
+at runtime, and even that it always terminates. That means every typo
+and every misplaced `null` found without even running your program.
 
 > That's great, but types can't help with business logic!
 
@@ -121,9 +121,6 @@ list of the resulting type. Which function do I use? Let's find out:
 ## Static typing doesn't slow you down
 
 > I can whip up something in Python quicker than in a typed language.
-
-Maybe so, but I don't believe this is related to the lack of a type
-system. This is also subject to your relative experience with Python.
 
 Let's see what Facebook says about Flow:
 
@@ -157,13 +154,15 @@ but a type system can.
 
 For a simple proof that unit tests cannot do everything a type system
 can do, you can use a type system to prove that your code
-terminates. Doing this with a dynamic language is called 'the halting
-problem'.
+terminates. Doing this with an unrestricted dynamic language is the
+halting problem.
 
 More importantly, with a non-optional type system, you can't slack off
 from making your code robust. The type checker will keep you
 honest. You can choose to not write unit tests and your code will
 still run.
+
+Another take on this [here](http://evanfarrer.blogspot.ca/2012/06/unit-testing-isnt-enough-you-need.html).
 
 ## Dynamically typed languages don't have types
 
