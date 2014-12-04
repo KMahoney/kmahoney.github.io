@@ -19,6 +19,16 @@ entire career, I'm a type system advocate. I'll try to explain why.
 If any of this is inaccurate, let me know and I'll fix it. If I've
 started a flame war somewhere on the internet, I'm sorry.
 
+* [The debate has moved on](#the-debate-has-moved-on)
+* [You don't need to annotate](#you-dont-need-to-annotate)
+* [It's not about performance](#its-not-about-performance)
+* [Not as restrictive as you might think](#not-as-restrictive-as-you-might-think)
+* [Not just `TypeError`](#not-just-typeerror)
+* [Types are not only for correctness](#types-are-not-only-for-correctness)
+* [Static typing doesn't slow you down](#static-typing-doesnt-slow-you-down)
+* [Tests cannot do everything a type system can do](#tests-cannot-do-everything-a-type-system-can-do)
+* [Dynamically typed languages don't have types](#dynamically-typed-languages-dont-have-types)
+
 ## The debate has moved on
 
 > I've tried Java and static typing stinks!
@@ -154,13 +164,6 @@ More importantly, with a non-optional type system, you can't slack off
 from making your code robust. The type checker will keep you
 honest. You can choose to not write unit tests and your code will
 still run.
-
-## Compile times
-
-It's certainly true some languages could use improvement in this area,
-but this isn't something that's intrinsic to type checking. Running
-your test suite or running your program to check your changes can take
-up far more time.
 
 ## Dynamically typed languages don't have types
 
