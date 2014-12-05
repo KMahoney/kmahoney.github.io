@@ -1,5 +1,6 @@
 ---
 layout: article
+description: A short introduction to my structural editor project. Some advantages and disadvantages of structural editing.
 ---
 <div><iframe width="560" height="315" src="//www.youtube.com/embed/shLQw_ivtfw" frameborder="0" allowfullscreen></iframe></div>
 <div style="margin-bottom: 1.6em;"><a class="cta" href="/prototype">Try it out in your browser!</a></div>

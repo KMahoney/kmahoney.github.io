@@ -1,5 +1,6 @@
 ---
 layout: base
+description: Personal homepage of Kevin Mahoney
 ---
 <section>
   <p>
@@ -15,11 +16,11 @@ layout: base
 <section>
   <h2 id="articles">Articles</h2>
 
-  <article class="article">
-    <h3><a href="/articles/misconceptions-about-types/">Misconceptions About Types</a></h3>
-    <time>2014-12-03</time>
+  <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <h3><a href="/articles/misconceptions-about-types/" itemprop="url">Misconceptions About Types</a></h3>
+    <time itemprop="datePublished">2014-12-03</time>
     <div class="description">
-      <p>
+      <p itemprop="description">
         I weigh in on the age old debate of static vs. dynamic
         languages, and fix some misconceptions I've seen argued
         against type systems.
@@ -27,11 +28,11 @@ layout: base
     </div>
   </article>
 
-  <article class="article">
-    <h3><a href="/articles/structural-editor-prototype/">Structural Editing</a></h3>
-    <time>2014-10-29</time>
+  <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <h3><a href="/articles/structural-editor-prototype/" itemprop="url">Structural Editing</a></h3>
+    <time itemprop="datePublished">2014-10-29</time>
     <div class="description">
-      <p>
+      <p itemprop="description">
         A short introduction to my structural editor project. Some
         advantages and disadvantages of structural editing.
       </p>
