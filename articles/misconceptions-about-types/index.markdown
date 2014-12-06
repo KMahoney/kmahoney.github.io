@@ -171,8 +171,18 @@ Or at least they only have one type.
 
 This is more of an unimportant semantic quibble, but it can be a
 source of confusion. We've overloaded the term 'type' to refer to
-multiple related concepts. In my opinion the terminology should be
-thus: dynamic languages don't have types, they have 'tags'. They're
-unityped (or untyped), tagged languages.
+multiple concepts, and the term can mean different things depending on
+the context you use it in.
+
+When using a static typed language, 'type' is meant in the
+'type-theory' sense, meaning the mapping of a term to a
+domain. Something you can do without running the program.
+
+When using a dynamic language, 'type' usually refers to a variable's
+run-time tag. This is a different but related concept.
+
+In my opinion the terminology should be thus: dynamic languages don't
+have types, they have 'tags'. They're unityped (or untyped), tagged
+languages.
 
 I'll let the very opinionated Robert Harper [argue the rest for me](https://existentialtype.wordpress.com/2011/03/19/dynamic-languages-are-static-languages/).
