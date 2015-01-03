@@ -5,17 +5,11 @@ description: I weigh in on the age old debate of static vs. dynamic languages, a
 
 # Misconceptions About Types
 
-Most programmers have made up their minds about static/typed vs
-dynamic/untyped languages, and for some reason get quite passionate
-about it.
-
-I'm not going to give you the evil eye if you like to use Python, all
-I'm going to say is if you're going to favour dynamic languages over
-typed ones at least be aware of what's out there today.
-
-Despite exclusively using and continuing to use dynamic languages my
-entire career, I'm a type system advocate. Maybe this collection of
-misunderstandings I've seen in the wild will help explain why.
+Most programmers have made up their minds about static (typed) vs
+dynamic (untyped) languages, and for some reason get quite passionate
+about it. Some who come from the dynamic typing world have some odd
+ideas about types, and I see their misconceptions littered around the
+internet often.
 
 Disclaimer: if any of this is inaccurate, let me know and I'll fix
 it. If I've started a flame war somewhere on the internet, I'm sorry.
@@ -28,6 +22,7 @@ it. If I've started a flame war somewhere on the internet, I'm sorry.
 * [Types are not only for correctness](#types-are-not-only-for-correctness)
 * [Static typing doesn't slow you down](#static-typing-doesnt-slow-you-down)
 * [Tests cannot do everything a type system can do](#tests-cannot-do-everything-a-type-system-can-do)
+* [A type system can do everything unit tests can](#a-type-system-can-do-everything-unit-tests-can)
 * [Dynamically typed languages don't have types](#dynamically-typed-languages-dont-have-types)
 
 ## The debate has moved on
@@ -35,8 +30,8 @@ it. If I've started a flame war somewhere on the internet, I'm sorry.
 > I've tried Java and static typing stinks!
 
 We're not talking about Java, C# or C++ any more, we're talking about
-Haskell, Scala, Rust, ML, Flow, etc. Languages with type systems for
-the programmer, not for the compiler.
+Haskell, Scala, Rust, ML, Flow, Agda, Idris etc. Languages with type
+systems for the programmer, not for the compiler.
 
 If you hold an opinion on static vs. dynamic typing, and you want to
 consider it an informed opinion, you should have used at least one of
@@ -50,9 +45,9 @@ advocating any more when talking about typed languages.
 
 Ever since
 [Hindley-Milner](http://en.wikipedia.org/wiki/Hindley–Milner_type_system)
-came in to existence in 1969 we haven't needed to see this ugliness:
+came in to existence in 1969 we haven't needed to see type annotations.
 
-`std::map<string, char> *example = new std::map<string, char>();`
+Many programs annotate anyway as types can provide good documentation.
 
 ## It's not about performance
 
@@ -65,9 +60,9 @@ assumptions about the code.
 This is a nice benefit, but is not a big reason for using types. Not
 least because dynamic language performance is catching up.
 
-I would instead say this: types are a simple language for reasoning
-about your code. They help you understand it at a glance. They help
-you write correct code. They're documentation.
+Types are a simple language for reasoning about your code. They help
+you understand it at a glance. They help you write correct code and
+they provide documentation.
 
 ## Not as restrictive as you might think
 
@@ -75,10 +70,9 @@ By their very nature types restrict what you can do. That's the point
 of them. They only let you do what can be checked. How much they
 restrict you depends on the richness of the type system.
 
-Some might find this suffocating, but I'd actually argue that a very
-large percentage of any sane untyped codebase can be statically
-analysed and type inferred. This is the basis behind projects like
-Facebook's [Flow](http://flowtype.org).
+I'd argue that a very large percentage of any sane untyped codebase
+can be statically analysed and type inferred. This is the basis behind
+projects like Facebook's [Flow](http://flowtype.org).
 
 If you could write a program as you would in a dynamic language and
 have it checked for correctness, why *wouldn't* you?
@@ -160,10 +154,26 @@ halting problem.
 
 More importantly, with a non-optional type system, you can't slack off
 from making your code robust. The type checker will keep you
-honest. You can choose to not write unit tests and your code will
-still run.
+honest.
 
 Another take on this [here](http://evanfarrer.blogspot.ca/2012/06/unit-testing-isnt-enough-you-need.html).
+
+## A type system can do everything unit tests can
+
+So what about the reverse? Do we need unit tests when we have a type system?
+
+No, we don't. But there is a caveat: although a type system like the
+one found in ML and Haskell will save you from writing many tests,
+you'll need a more powerful system to cover everything a unit test
+could possibly do.
+
+Here's how you can write 'unit tests' in Agda's type system:
+
+https://www.youtube.com/watch?v=8WFMK0hv8bE&t=31m30s
+
+It's worth watching the whole video from the start. You'll see that
+not only can types do everything unit tests can do, they can
+exhaustively prove things about your code.
 
 ## Dynamically typed languages don't have types
 
