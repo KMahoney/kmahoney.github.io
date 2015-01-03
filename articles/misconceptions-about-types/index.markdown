@@ -167,11 +167,9 @@ one found in ML and Haskell will save you from writing many tests,
 you'll need a more powerful system to cover everything a unit test
 could possibly do.
 
-Here's how you can write 'unit tests' in Agda's type system:
+[Here's](https://www.youtube.com/watch?v=8WFMK0hv8bE&t=31m30s) how you can write 'unit tests' in Agda's type system.
 
-https://www.youtube.com/watch?v=8WFMK0hv8bE&t=31m30s
-
-It's worth watching the whole video from the start. You'll see that
+It's worth watching the whole video [from the start](https://www.youtube.com/watch?v=8WFMK0hv8bE). You'll see that
 not only can types do everything unit tests can do, they can
 exhaustively prove things about your code.
 
