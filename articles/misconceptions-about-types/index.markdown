@@ -24,6 +24,7 @@ it. If I've started a flame war somewhere on the internet, I'm sorry.
 * [Tests cannot do everything a type system can do](#tests-cannot-do-everything-a-type-system-can-do)
 * [A type system can do everything unit tests can](#a-type-system-can-do-everything-unit-tests-can)
 * [Dynamically typed languages don't have types](#dynamically-typed-languages-dont-have-types)
+* [Further reading](#further-reading)
 
 ## The debate has moved on
 
@@ -194,3 +195,8 @@ have types, they have 'tags'. They're unityped (or untyped), tagged
 languages.
 
 I'll let the very opinionated Robert Harper [argue the rest for me](https://existentialtype.wordpress.com/2011/03/19/dynamic-languages-are-static-languages/).
+
+## Further reading
+
+* [What to Know Before Debating Type Systems](http://blogs.perl.org/users/ovid/2010/08/what-to-know-before-debating-type-systems.html)
+* [Types and Functions](http://bartoszmilewski.com/2014/11/24/types-and-functions/)
