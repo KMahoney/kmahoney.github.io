@@ -1,5 +1,6 @@
 ---
 layout: article
+title: Structural Editing
 description: A short introduction to my structural editor project. Some advantages and disadvantages of structural editing.
 ---
 <div><iframe width="560" height="315" src="//www.youtube.com/embed/shLQw_ivtfw" frameborder="0" allowfullscreen></iframe></div>

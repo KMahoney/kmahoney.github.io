@@ -3,6 +3,7 @@ layout: base
 ---
 <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
   <div itemprop="articleBody">
+    <time itemprop="datePublished">{{ page.date | date_to_long_string }}</time>
     {{ content }}
   </div>
 </article>
