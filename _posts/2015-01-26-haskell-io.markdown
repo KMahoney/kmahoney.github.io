@@ -83,8 +83,8 @@ If you have a dictionary lookup function which takes a key and returns a result 
 lookup :: String -> Maybe String
 {% endhighlight %}
 
-We don't specify the dictionary with this function, we just assume
-it's in the environment somewhere for simplicity.
+We don't specify the dictionary as an argument, we just assume
+the function has its own built in dictionary for simplicity.
 
 `Maybe a` is a type with two potential values: it's either `Nothing`
 or `Just a`, where `a` is a type we haven't specified. In this example
