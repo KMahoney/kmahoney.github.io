@@ -22,7 +22,7 @@ readFile :: String -> IO String
 `IO` by itself is not a concrete type you can use in a function, it's
 a type constructor. This means it needs to be given another type as an
 argument to make it a concrete type. `IO String` is an IO action that
-returns a string, `IO ()` is an IO action that returns no useful
+returns a string; `IO ()` is an IO action that returns no useful
 information as `()` is the unit type (a bit like `void` in C).
 
 For example, the function that prints a string and returns nothing
