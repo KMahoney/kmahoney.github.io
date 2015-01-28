@@ -7,7 +7,7 @@ description: An update on my structural editor, and thoughts on the PureScript l
 # Editor Rewrite & Thoughts on PureScript
 
 I recently updated my structural editor, which I have given its own
-domain: [seditment.io](http://sediment.io)
+domain: [sediment.io](http://sediment.io)
 
 ## Rewrite
 
