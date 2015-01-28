@@ -84,7 +84,8 @@ If I were to rewrite again, alternatives I would consider are
 [GhcJS](https://github.com/ghcjs/ghcjs), or
 [js_of_ocaml](http://ocsigen.org/js_of_ocaml/). I'm least familiar
 with OCaml, but I find its module system to be theoretically nicer
-than using type classes.
+than using type classes. [Idris](http://www.idris-lang.org) looks a
+bit more 'out there', but it's fascinating.
 
 ## Editor Improvements
 
