@@ -33,8 +33,8 @@ I settled on PureScript, which at the time of writing is in an early
 stage of development. I had to write a lot of bindings to JavaScript
 myself, but this wasn't as time consuming as you might imagine. There
 are some rough edges and bugs, but I'm pleased with my choice. There
-was a improvement in development time and I think there's more to it
-than the fact that it was, at least in part, a rewrite.
+was an improvement in development time and I think there was more to
+it than the fact that it was, at least in part, a rewrite.
 
 I also decided to move from React to virtual-dom. This project is much
 smaller, more understandable, and easier to bind to PureScript than
