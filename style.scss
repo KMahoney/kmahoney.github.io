@@ -56,6 +56,7 @@ h2 {
 h3, h4 {
     font-size: 1em;
     line-height: 1.6;
+    margin: 2em 0em 0em 0em;
 }
 
 
@@ -128,6 +129,21 @@ time { font-size: 0.8em; }
     ul {
         list-style: circle;
         margin-left: 2em;
+    }
+
+    pre {
+        overflow: hidden;
+    }
+
+    & > div > pre {
+        border: 1px solid #888;
+        padding: 1em;
+        margin-bottom: 1em;
+    }
+
+    .highlight {
+        border: 1px solid #888;
+        padding: 1em;
     }
 
     & > div > div.highlight {
