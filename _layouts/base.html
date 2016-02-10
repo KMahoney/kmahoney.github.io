@@ -11,6 +11,9 @@
     <meta name="author" content="Kevin Mahoney">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
+    {% for style in page.styles %}
+    <link rel="stylesheet" href="{{ style }}">
+    {% endfor %}
   </head>
 
   <body>
@@ -27,5 +30,8 @@
 {{ content }}
 
     </main>
+    {% for script in page.scripts %}
+    <script src="{{ script }}"></script>
+    {% endfor %}
   </body>
 </html>
