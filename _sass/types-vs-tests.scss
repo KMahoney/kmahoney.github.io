@@ -1,0 +1,35 @@
+#tests-vs-types {
+    span.yes { color: green; }
+    span.no { color: red; }
+
+    table.comparison {
+        margin-bottom: 1em;
+        border-collapse: collapse;
+
+        th { text-align: left; }
+
+        th, td {
+            &.yes { background: #AAFFAA; }
+            &.no { background: #FFAAAA; }
+            &.yes, &.no {
+                border: 2px solid white;
+            }
+
+            padding: 0.5em;
+        }
+
+        td { text-align: center; }
+        th.prop, td.prop { text-align: left; }
+
+        th.rot90 {
+            white-space: nowrap;
+            height: 12em;
+            vertical-align: bottom;
+
+            div {
+                transform: rotate(270deg);
+                width: 1.5em;
+            }
+        }
+    }
+}

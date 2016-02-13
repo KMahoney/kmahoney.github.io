@@ -75,6 +75,11 @@ section article { margin-bottom: 1.6em; }
 
 // --------------------------------------------------------------------------------
 
+ul, ol {
+    list-style: circle;
+    margin-left: 2em;
+}
+
 nav {
     display: inline-block;
     line-height: 1;
@@ -126,11 +131,6 @@ time { font-size: 0.8em; }
 }
 
 .article {
-    ul {
-        list-style: circle;
-        margin-left: 2em;
-    }
-
     pre {
         overflow: hidden;
     }
@@ -152,3 +152,4 @@ time { font-size: 0.8em; }
 }
 
 @import 'syntax';
+@import 'types-vs-tests';
