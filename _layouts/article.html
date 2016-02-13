@@ -1,7 +1,7 @@
 ---
 layout: base
 ---
-<article class="article" itemscope itemtype="http://schema.org/BlogPosting">
+<article class="article" itemscope itemtype="http://schema.org/BlogPosting" id="{{ page.title | slugify }}">
   <div itemprop="articleBody">
     <time itemprop="datePublished">{{ page.date | date_to_long_string }}</time>
     {{ content }}
