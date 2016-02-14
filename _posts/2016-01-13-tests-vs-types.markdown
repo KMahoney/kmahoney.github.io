@@ -217,7 +217,8 @@ This is a very interesting property for another reason: because we know there ar
 effects, we can actually figure out what this function does based only on its type
 signature! Search for this signature on
 [Hoogle](https://www.haskell.org/hoogle/?hoogle=%5Ba%5D+-%3E+a+-%3E+Maybe+Int) and note
-the first result.
+the first result. This is not the *only possible* implementation, but we can have enough
+confidence for documentation purposes.
 
 ### Analysis
 
@@ -253,11 +254,16 @@ the first result.
   - <span class="yes">✓</span> Memory safe
   - <span class="yes">✓</span> Cannot be called with an unhandled type
   - <span class="yes">✓</span> **No side effects**
-  - <span class="yes">✓</span> **No exceptions**
+  - <span class="no">✗</span> **No exceptions**
   
-    Exceptions are also a side effect handled by the type system. We know our function is
-    pure and won't throw an exception.
+    For the these properties I make a distinction between exception and errors, where
+    exceptions are recoverable and errors are not (partial functions etc.).
   
+    For the most part, exceptions are described by the type system (e.g. in the IO
+    monad). We should know our function won't throw an exception from its type
+    signature. However Haskell breaks this by
+    [allowing exceptions to be thrown from pure functions](https://hackage.haskell.org/package/base-4.8.2.0/docs/Control-Exception.html#g:2).
+
   - <span class="no">✗</span> **No errors**
   
     We can still use partial functions or, for example, divide by zero. This will result
@@ -284,9 +290,12 @@ The input can either be `true` or `false`. Once you have tested the result of th
 possibilities, you have the holy grail. No exceptions, no infinite loops, no incorrect
 results, no errors.
 
+There is a hitch: this is not quite true in Haskell. Haskell values can also be a bottom
+type (such as `undefined` or `error`) so we don't have 'complete' coverage.
+
 Further reading: [There are Only Four Billion Floats–So Test Them All!](https://randomascii.wordpress.com/2014/01/27/theres-only-four-billion-floatsso-test-them-all/)
 
-Unfortunately our domain in this example is infinite, so tests can only show that our code
+Regardless, our domain in this example is infinite, so tests can only show that our code
 works for a finite set of examples.
 
 ### Analysis
@@ -307,12 +316,25 @@ I've included C to make a point about the more antiquated type systems. In C, th
 are not really there for the programmer, they're there for the compiler. Their primary
 purpose is to make your code fast.
 
-Because C lacks sum types, we don't know what our function will return if the element is
-missing. We have to rely on convention or documentation (typically `-1`).
+In this example, we don't know what our function will return if the element is missing. We
+have to rely on convention or documentation (in this case it could be a sentinel value of
+`-1`).
+
+We could also use 'out values' so we can return an error and write out a value. This is
+slightly more descriptive but you also need to rely on documentation to know which
+parameters are written to and which are read from. In both cases it is difficult to infer
+the behaviour from the types.
+
+{% highlight c %}
+error_t x(int *y, size_t n, int z, size_t* w) {
+  /* implementation elided */
+}
+{% endhighlight %}
 
 ### Analysis
 
-A type system alone does not help us reason about our code. Compare to Haskell.
+A type system alone does not always give us many guarantees. We get some information from
+these types, but [compare](#comparison) C to Haskell.
 
 ## Idris
 
@@ -421,7 +443,7 @@ where I plead for help.
 <tr><td class="prop">Memory safe</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><td class="prop">Cannot be called with an unhandled type</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><td class="prop">No side effects</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-<tr><td class="prop">No exceptions</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td class="prop">No exceptions</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><td class="prop">No errors</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><td class="prop">No infinite loops</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 </table>
@@ -434,3 +456,18 @@ combination with types. Ideally with a QuickCheck style library.
 
 With dependent types, the line between tests and types becomes blurrier. If you're writing
 software for Boeing or for an iron lung, you may want to consider writing proofs.
+
+## Errata and Feedback
+
+[pron98](https://www.reddit.com/r/programming/comments/45obw5/tests_vs_types/czzc18s) on
+Reddit points out that dependent types are quite a new thing, and not really used in
+industry.
+
+[dllthomas](https://news.ycombinator.com/item?id=11096081) points out an inaccuracy in the
+'complete' test coverage example, and casts doubt on Haskell's ability to keep exceptions
+in the type system.
+
+A few people had some misgivings about the C example and explanation, which I have
+clarified. [angersock](https://lobste.rs/s/kj6wl9/tests_vs_types/comments/nkwlf6#c_nkwlf6)
+points out another way of writing it -- although I will point out sentinel values are not
+rare in C!
