@@ -436,7 +436,7 @@ where I plead for help.
 <tr><td class="prop">The returned index always refers to a matching value</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
 <tr><td class="prop">A missing element always returns <code>None</code> or <code>Nothing</code></td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
 <tr><th class="prop">Common Errors</th></tr>
-<tr><td class="prop">No typos or incorrect names</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td class="prop">No typos or incorrect names</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><td class="prop">No unexpected null</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><td class="prop">The failure case is always handled</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
 <tr><th class="prop">Guarantees</th></tr>
@@ -471,3 +471,5 @@ A few people had some misgivings about the C example and explanation, which I ha
 clarified. [angersock](https://lobste.rs/s/kj6wl9/tests_vs_types/comments/nkwlf6#c_nkwlf6)
 points out another way of writing it -- although I will point out sentinel values are not
 rare in C!
+
+Alexey Shmalko noted that C is a compiled language and so you can't have typos.
