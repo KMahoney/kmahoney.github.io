@@ -1,6 +1,7 @@
 ---
 layout: article
 description: I weigh in on the age old debate of static vs. dynamic languages, and fix some misconceptions I've seen argued against type systems.
+archived: true
 ---
 
 # Misconceptions About Types

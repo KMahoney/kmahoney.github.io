@@ -34,6 +34,7 @@ description: Personal homepage of Kevin Mahoney
   <h2 id="articles">Articles</h2>
 
   {% for post in site.posts %}
+  {% unless post.archived %}
   <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
     <h3><a href="{{ post.url }}" itemprop="url">{{ post.title }}</a></h3>
     <time itemprop="datePublished">{{ post.date | date_to_long_string }}</time>
@@ -43,8 +44,10 @@ description: Personal homepage of Kevin Mahoney
       </p>
     </div>
   </article>
+  {% endunless %}
   {% endfor %}
 
+  <p><a href="/articles/">All articles ({{ site.posts.size }})...</a></p>
 </section>
 
 <section>

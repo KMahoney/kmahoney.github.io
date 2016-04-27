@@ -2,6 +2,7 @@
 layout: article
 title: Modern Web Documents
 description: Experimenting with a modern interface to documents on the web.
+archived: true
 ---
 
 # Modern Web Documents

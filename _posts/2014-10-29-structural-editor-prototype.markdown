@@ -2,6 +2,7 @@
 layout: article
 title: Structural Editing
 description: A short introduction to my structural editor project. Some advantages and disadvantages of structural editing.
+archived: true
 ---
 <div><iframe width="560" height="315" src="//www.youtube.com/embed/shLQw_ivtfw" frameborder="0" allowfullscreen></iframe></div>
 <div style="margin-bottom: 1.6em;"><a class="cta" href="http://sediment.io/">Try it out in your browser!</a></div>
