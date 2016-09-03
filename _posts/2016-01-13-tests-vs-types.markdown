@@ -62,10 +62,10 @@ in a list, or it could send an offensive email to your grandmother.
 
 ### Analysis
 
-Without tests or types, not only are you writing brittle code, you're almost entirely
-dependent on unchecked documentation. If you're working in a team, this could be
-problematic. Especially as the inevitable happens and the documentation becomes out of
-date.
+Without tests or types, not only are you writing brittle code, you're
+almost entirely dependent on unchecked documentation. Because this
+kind of documention is checked by people and not by machines it can
+easily become out of date and wrong.
 
 - **Documentation**
   - <span class="no">✗</span> **We know the intended behaviour**
@@ -101,7 +101,7 @@ this would make for a very short blog post, so let's imagine the implementation 
 obvious.
 
 If tests cannot show us something in general, only particular cases, this implies that
-tests cannot show an absence of errors. For example, there is no test we could write that
+tests *cannot* show an absence of errors. For example, there is no test we could write that
 would show that our function never throws an exception or never goes in to an infinite
 loop, or contains no invalid references. Only static analysis can do this.
 
@@ -141,7 +141,7 @@ general. Annoyingly, this means common errors can only be partially guarded agai
   
   - <span class="no">✗</span> **No unexpected null**
   
-    A scourge on many typed languages, Python does nothing to help here.
+    A scourge on many typed languages, dynamically typed languages do nothing to help here.
 
   - <span class="no">✗</span> **The failure case is always handled**
   
@@ -165,8 +165,9 @@ general. Annoyingly, this means common errors can only be partially guarded agai
 x y z = -- implementation elided
 {% endhighlight %}
 
-You do not need to specify types in Haskell. The types are inferred from the
-implementation.
+If you're not familiar with Haskell's syntax, this is the definition of a function `x`
+with parameters `y` and `z`. You do not need to specify types in Haskell. The types are
+inferred from the implementation.
 
 It doesn't look like there is any more here than in the first Python example, but by
 virtue of the fact we have written our function in Haskell and it type checks, we already
@@ -209,7 +210,7 @@ grandma *really* safe? Are you sure this function can't send out any expletive-l
 emails?
 
 Haskell is famously a pure functional language. This doesn't mean it can't do side
-effects, but that any side effects that it does are present in the type signature. We know
+effects, but that any side effects it does are present in the type signature. We know
 the type of this function and can see it is pure, so we know it doesn't modify any
 external state.
 
@@ -217,8 +218,8 @@ This is a very interesting property for another reason: because we know there ar
 effects, we can actually figure out what this function does based only on its type
 signature! Search for this signature on
 [Hoogle](https://www.haskell.org/hoogle/?hoogle=%5Ba%5D+-%3E+a+-%3E+Maybe+Int) and note
-the first result. This is not the *only possible* implementation, but we can have enough
-confidence for documentation purposes.
+the first result. This is not the *only possible* implementation for this type signature,
+but we can have enough confidence for documentation purposes.
 
 ### Analysis
 
@@ -266,7 +267,7 @@ confidence for documentation purposes.
 
   - <span class="no">✗</span> **No errors**
   
-    We can still use partial functions or, for example, divide by zero. This will result
+    We can still use partial functions. For example, dividing by zero. This will result
     in an unrecoverable error.
   
   - <span class="no">✗</span> **No infinite loops**
@@ -326,6 +327,7 @@ parameters are written to and which are read from. In both cases it is difficult
 the behaviour from the types.
 
 {% highlight c %}
+/* The same function with an 'out' parameter */
 error_t x(int *y, size_t n, int z, size_t* w) {
   /* implementation elided */
 }
@@ -394,9 +396,9 @@ type system.
 
 ## Idris With *Proofs*
 
-To complete our analysis, we can use the full power of a dependent type system and prove
-our implementation. We can do this because of the Curry-Howard correspondence, which means
-that a dependent type system is equivalent to constructive logic.
+To complete our analysis, we can use the full power of a dependent type system and *prove*
+our implementation. We can do this because a dependent type system is equivalent to
+constructive logic (see [Curry-Howard correspondence](https://en.wikipedia.org/wiki/Curry–Howard_correspondence)).
 
 We can prove the remaining properties which have eluded us so far:
 
@@ -405,6 +407,7 @@ We can prove the remaining properties which have eluded us so far:
 x : DecEq a => Vect n a -> (y : a) -> Maybe (Fin n)
 x y z = ...
 
+-- This is not executable code, but a proof of function 'x'
 findIndexOk : DecEq a => (y : Vect n a) -> (z : a) -> 
               case (x y z) of
                 Just i => Elem z y
@@ -412,9 +415,9 @@ findIndexOk : DecEq a => (y : Vect n a) -> (z : a) ->
 findIndexOk y z = ...
 {% endhighlight %}
 
-Read this as "for all elements, and all vectors of that elements type, if an index is
-found the element must be in the vector, and if an index is not found the element must not
-be in the vector"
+Read the type signature of `findIndexOk` as "for all elements, and all vectors of that
+elements type, if an index is found the element must be in the vector, and if an index is
+not found the element must not be in the vector"
 
 So everything is covered! What's the downside? Well, it can be tricky to write these
 proofs. At least for me. If you're curious enough to see the proof in full, read the
