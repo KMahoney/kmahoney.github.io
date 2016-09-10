@@ -1,27 +1,29 @@
 ---
 layout: article
-title: Log Orientated Data in PostgreSQL
-description: The advantages and disadvantages of a log orientated architecture in PostgreSQL, including a simple blog application example.
+title: "Database Design: Immutable Data"
+description: The advantages and disadvantages of a keeping data around, including a simple blog application example in PostgreSQL.
+redirect_from: 
+  - /articles/log-orientated-data/
 ---
 
-# Log Orientated Data
+# Immutable Data
 
-A log orientated approach is a great way to think about and store
-your data. In this article I'll be talking about the advantages and
-disadvantages, and walking through a simple blog application in
-PostgreSQL. I highly recommend this approach, but the standard 'caveat
-emptor' disclaimer applies. Be aware of the trade-offs you are making.
+In this article I'll be talking about the advantages and disadvantages
+of immutable data in databases, and walking through a simple blog
+application in PostgreSQL. I highly recommend this approach in many
+cases, but the standard 'caveat emptor' disclaimer applies. Be aware
+of the trade-offs you are making.
 
-* [An Introduction to Log Orientated Architecture](#an-introduction-to-log-orientated-architecture)
+* [Introduction](#introduction)
 * [Advantages](#advantages)
 * [Drawbacks](#drawbacks)
-* [A Log Orientated Blog Application in PostgreSQL](#a-log-orientated-blog-application-in-postgresql)
+* [An Immutable Blog Application in PostgreSQL](#an-immutable-blog-application-in-postgresql)
 * [Performance Improvements](#performance-improvements)
 
-## An Introduction to Log Orientated Architecture
+## Introduction
 
-In a traditional blog application, you may define your blog post table
-as follows:
+In a traditional blog application, a blog post may be defined as
+follows:
 
 {% highlight sql %}
 CREATE TABLE blog.article (
@@ -31,21 +33,19 @@ CREATE TABLE blog.article (
 );
 {% endhighlight %}
 
-What happens when you want to edit the content of the post or change
-its title? You perform an `UPDATE`. This destructively mutates your
-database. What I mean by 'destructive' here is that you lose
-information - you no longer know what the blog post contained prior to
-its edit.
+What happens when the content or title of the post changes? An
+`UPDATE` is performed. This destructively mutates your database,
+i.e. information has been lost - it is no longer known what the blog
+post contained prior to its edit.
 
-The idea behind the log orientated approach is that you don't record
-the current state of the blog post, instead you record an immutable
-log of events for the entire history of your application. Your
-application state is a pure function of these events. No information
-is lost.
+The idea behind the approach detailed here is that the current state
+of the blog post is not recorded, instead there is an immutable log of
+events for the entire history of the application. The current
+application state is a function of these events. No information is
+lost.
 
-A log orientated approach will only ever `INSERT` into the
-database. It will never `UPDATE`. Your blog post table will now look
-more like this:
+This approach will only ever `INSERT` into the database. It will never
+`UPDATE`. The blog post table will now look more like this:
 
 {% highlight sql %}
 CREATE SEQUENCE logblog.revision_id_seq;
@@ -58,22 +58,20 @@ CREATE TABLE logblog.article_revision (
 );
 {% endhighlight %}
 
-Note the slug is no longer unique, so you can update an article by
+Note the slug is no longer unique, so an article is updated by
 inserting a new `article_revision` with an existing slug.
 
 There are some existing databases based around this concept, including
 [Datomic](http://datomic.com) and [EventStore](https://geteventstore.com), but in this article I'll be focusing on how to
-do this in PostgreSQL. PostgreSQL isn't really built for this, but
-it's a very flexible and well-engineered database so you can get quite
-far with it.
+do this in PostgreSQL.
 
 ## Advantages
 
 Why would you want to do this?
 
-The first reason is immutability. This has all the advantages of
-purely functional general purpose languages. Immutability is much
-easier to reason about than a stateful mess. You gain
+Immutable data in databases has all the same advantages as
+immutable data in general purpose languages. It is usually much
+easier to reason about than mutable state. See:
 [referential transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science)).
 
 This paragraph from the Datomic website explains other advantages this
@@ -93,16 +91,10 @@ approach quite well:
 > view in a traditional database. This all happens automatically in
 > Datomic. Datomic is a database of facts, not places.
 
-Storing immutable facts is great for auditing and debugging. It's
+Immutable facts are great for auditing and debugging. It's
 tremendously helpful to be able to see the state of you application at
 any point in time, and step through the state changes one by one. It's
-especially invaluable when you want to implement things like financial
-transactions.
-
-There are potential performance advantages as you're only ever
-appending facts, never updating values in place. However, a general
-purpose database like PostgreSQL may or may not be able to take
-advantage of this. I haven't done the benchmarks.
+especially invaluable when working with financial data.
 
 ## Drawbacks
 
@@ -110,29 +102,26 @@ There are some trade-offs to this approach: space usage, complexity
 and performance.
 
 Of course, storing every change to the state instead of mutating data
-will require more persistent storage space. Usually this shouldn't be
-a concern as disk space is quite cheap these days, but it *could* be a
-problem if you have a lot of data.
+will require more persistent storage space. If you're only inserting
+data your storage requirements can only ever grow.
 
-In PostgreSQL the read queries will be more complicated and less
-performant. The good news is that it's much easier to scale reads than
-writes, and I'll discuss some workarounds later in the article. More
-specialised databases may have better performance for these kinds of
-queries.
+In PostgreSQL the read queries will typically be more complicated and
+have worse performance. Theoretically this doesn't have to be the
+case. See the [Performance Improvements](#performance-improvements)
+section for more details.
 
-## A Log Orientated Blog Application in PostgreSQL
+## An Immutable Blog Application in PostgreSQL
 
 This code is available as a [gist](https://gist.github.com/KMahoney/dcc12d3ff6a49c11cdc9).
 
-So as an example of using a log orientated approach in PostgreSQL,
-let's write a simple blog application. We will want to be able to:
+This application should be able to:
 
-* Write and edit blog posts
+* Privately write and edit blog posts
 * Publish revisions of posts for public viewing
 * Delete posts
 * Add or remove tags to posts
 
-Let's start by creating a schema.
+### Schema
 
 {% highlight sql %}
 CREATE SCHEMA logblog;
@@ -140,11 +129,10 @@ CREATE SCHEMA logblog;
 
 ### Article Table
 
-Create a table representing the set of article slugs. This allows us
-to reference a slug as a foreign key and maintain
-consistency. PostgreSQL would not allow you to reference the `slug`
-field in the `article_revision` table in a foreign key as it is not
-unique in that table.
+A table representing the set of article slugs. Foreign keys can use
+this as a reference to maintain referential integrity. PostgreSQL does
+not allow referencing the `slug` field in the `article_revision` table
+as it is not unique in that table.
 
 {% highlight sql %}
 CREATE TABLE logblog.article (
@@ -154,11 +142,10 @@ CREATE TABLE logblog.article (
 
 ### Revision Table
 
-Next is an immutable log of article revisions. This should look fairly
-straight forward. We can create new articles by inserting the slug
-into `article` and the revision into `article_revision` inside a
-transaction, and update an article by simply inserting the revision
-(I'll show you later).
+Next is an immutable log of article revisions. New articles can be
+created by atomically inserting the slug into `article` and the
+revision into `article_revision`. Articles can be updated by simply
+inserting a new revision with an existing `article` slug.
 
 {% highlight sql %}
 CREATE SEQUENCE logblog.revision_id_seq;
@@ -174,8 +161,8 @@ CREATE TABLE logblog.article_revision (
 ### Publishing
 
 Now an immutable log of article publish events. The public will be
-able to see the last published version of an article. This means you
-can publish an earlier revision to 'rollback' an article.
+able to see the last published version of an article. This means it is
+possible to publish an earlier revision to 'rollback' an article.
 
 Note the timestamp when an article was published or deleted is
 distinct from when the revision was created. Readers are probably more
@@ -194,9 +181,7 @@ CREATE TABLE logblog.article_publish (
 An immutable log of article deletion events. Articles are only
 considered deleted when the deletion timestamp is later than any
 publish actions. This means articles can be 'undeleted' by
-re-publishing them. In a log orientated database no data is every
-truly removed. This is something you'll have to take into account if
-you're handling sensitive data.
+re-publishing them. No data is ever truly removed.
 
 {% highlight sql %}
 CREATE TABLE logblog.article_deletion (
@@ -210,11 +195,11 @@ CREATE TABLE logblog.article_deletion (
 An immutable log of tag events. It's awkward to create a tag table
 with a set of unique tag names like we do with articles, so instead we
 just record tag events. This is a bit lazy as it doesn't enforce
-consistency with revoked tags (i.e. you can revoke a non-existant
+consistency with removed tags (i.e. you can remove a non-existing
 tag).
 
 {% highlight sql %}
-CREATE TYPE logblog.tag_event_type AS ENUM ('add', 'revoke');
+CREATE TYPE logblog.tag_event_type AS ENUM ('add', 'remove');
 CREATE TABLE logblog.tag_event (
        timestamp TIMESTAMP NOT NULL DEFAULT now(),
        slug TEXT NOT NULL REFERENCES logblog.article,
@@ -225,10 +210,10 @@ CREATE TABLE logblog.tag_event (
 
 ### Building Views
 
-In order to easily query the current state of our application we can
-build up some PostgreSQL views to make it easier for us. We're going
-to make heavy use of `DISTINCT ON` to find the latest state of each
-component.
+Querying this data can get quite complicated, so it is a good idea to
+break it down with views that show the current state of the
+application. They make heavy use of `DISTINCT ON` to find the latest
+state of each component.
 
 This view is the latest deletion date for an article (if applicable)
 
@@ -254,9 +239,9 @@ CREATE VIEW logblog.last_published_view AS
      ORDER BY rev.slug, timestamp DESC;
 {% endhighlight %}
 
-We'll also want to know when an article was first published, as this
-is the date you usually show on an article (maybe you could use the
-last published timestamp to show when it was last updated).
+Another piece of useful information is when an article was first
+published. This is the date you usually show on an article. The last
+published timestamp shows when an article was last updated.
 
 {% highlight sql %}
 CREATE VIEW logblog.first_published_view AS
@@ -268,7 +253,7 @@ CREATE VIEW logblog.first_published_view AS
      ORDER BY rev.slug, timestamp;
 {% endhighlight %}
 
-We'll aggregate the tags as a PostgreSQL array for convenience.
+Aggregate the tags as a PostgreSQL array for convenience.
 
 {% highlight sql %}
 CREATE VIEW logblog.article_tag_view AS
@@ -284,9 +269,9 @@ CREATE VIEW logblog.article_tag_view AS
 
 ### The Public's View
 
-Here we use the previous views as building blocks to create our public
-article view. Note we don't show articles that have a deletion date
-later than the last published date.
+Here the previous views are used as building blocks to create a public
+article view. Note that articles that have a deletion date later than
+the last published date are not shown.
 
 {% highlight sql %}
 CREATE VIEW logblog.public_article_view AS
@@ -336,7 +321,7 @@ CREATE VIEW logblog.article_history_view AS
                 slug,
                 (CASE 
                  WHEN event = 'add' THEN ('Added tag ' || tag)
-                 WHEN event = 'revoke' THEN ('Deleted tag ' || tag)
+                 WHEN event = 'remove' THEN ('Deleted tag ' || tag)
                  END)::TEXT AS event
          FROM logblog.tag_event)
        (SELECT * FROM revision_events)
@@ -347,8 +332,8 @@ CREATE VIEW logblog.article_history_view AS
 
 ### Testing
 
-Let's try out some test data! This is how you create a new article. If
-the article slug already exists the transaction will abort.
+This is how you create a new article. If the article slug already
+exists the transaction will abort.
 
 {% highlight sql %}
 BEGIN;
@@ -360,7 +345,7 @@ BEGIN;
 COMMIT;
 {% endhighlight %}
 
-Now let's publish and tag the article:
+Publishing and tagging the article:
 
 {% highlight sql %}
 INSERT INTO logblog.article_publish (timestamp, revision_id) VALUES
@@ -411,7 +396,7 @@ INSERT INTO logblog.tag_event (timestamp, slug, event, tag) VALUES
   ('2015-01-01 02:00:00', 'revised', 'add', 'of'),
   ('2015-01-01 03:00:00', 'revised', 'add', 'tags'),
   ('2015-01-01 04:00:00', 'revised', 'add', 'deleted-tag'),
-  ('2015-01-01 05:00:00', 'revised', 'revoke', 'deleted-tag');
+  ('2015-01-01 05:00:00', 'revised', 'remove', 'deleted-tag');
 {% endhighlight %}
 
 Let's take a look at the output:
@@ -459,7 +444,7 @@ SELECT * FROM logblog.article_history_view ORDER BY slug, timestamp;
    
 ## Performance Improvements
 
-Let's take a look at the query plan for one of our views:
+Here is the query plan for one of our views:
 
 {% highlight sql %}
 EXPLAIN SELECT * FROM logblog.public_article_view;
@@ -516,20 +501,20 @@ EXPLAIN SELECT * FROM logblog.public_article_view;
 Ouch.
 
 Unfortunately PostgreSQL does not provide many tools to use these
-queries more efficiently, but we can trade some write performance for
-read performance.
+queries more efficiently, but it is possible to trade some write
+performance for read performance.
 
 The first way is very simple: use a [materialised view](http://www.postgresql.org/docs/9.4/static/sql-creatematerializedview.html). This
 requires minimal changes to our database and has the desired
 effect.
 
-We can make this more efficient by manually creating a table and using
-triggers to update it. This way we still have a log of past events,
-but we also have an efficient way to query the current state of the
-application. We can index this state the same way as any other table
-and rebuild it from scratch using the log data if needed.
+This can be made more efficient still by manually creating a table and
+using triggers to update it. This way there is still a log of past
+events, but there is also an efficient way to query the current state
+of the application. This state can be indexed the same way as any
+other table and rebuilt from scratch using the log data if needed.
 
-Here's a minimal example (I haven't included deletions or tagging):
+Here's a minimal example - deletions and tagging are not included:
 
 {% highlight sql %}
 CREATE TABLE logblog.public_article_state (
