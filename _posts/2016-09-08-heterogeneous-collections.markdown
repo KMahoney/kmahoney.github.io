@@ -41,20 +41,6 @@ all times.
 ensures that an attribute or set of attributes in a table reference a
 unique row at all times.
 
-### Disclaimer
-
-The internet has made me a
-[defensive writer](https://pchiusano.github.io/2014-10-11/defensive-writing.html),
-so here I will say that I do not claim to be an expert in database
-design. My experience is mostly with PostgreSQL and MySQL, and so some
-of the advantages and drawbacks listed below might be particular to
-these databases.
-
-Improvements and corrections are welcome. You can
-[email](mailto:kevin@kevinmahoney.co.uk),
-[pull request](https://github.com/KMahoney/kmahoney.github.io), or
-comment on another site and hope I read it.
-
 ### Note
 
 SQL snippets will be PostgreSQL specific. The result of the cart query will always look something like this:
