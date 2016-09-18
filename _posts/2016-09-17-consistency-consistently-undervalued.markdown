@@ -136,3 +136,26 @@ touched on referential integrity or other kinds of constraints!
 
 In conclusion, if you use micro-services or NoSQL databases, do your
 homework! Choose appropriate boundaries for your systems.
+
+## Errata and Feedback
+
+On Hacker News *vidarh* holds the opinion that
+[consistency is overvalued](https://news.ycombinator.com/item?id=12519985).
+I'd like to emphasise that I'm not against using distributed systems
+as long as the resulting problems are well understood. I'd also like
+to say that if you have the option, ACID transactions are usually
+simpler than eventual consistency or distributed transactions.
+
+A few people dislike the bank example because real world banks use
+eventual consistency. First of all, I agree (from experience)
+with [4ad](https://news.ycombinator.com/item?id=12521059) that this is
+not the greatest counter-argument against ACID. Secondly, the real
+world banking system is (hopefully) well thought through and
+understood. I doubt they had the option of a central ACID database,
+because if they did I'm sure they would have taken it.
+
+There was [some discussion](https://news.ycombinator.com/item?id=12520036)
+on the term 'NoSQL'. I would like to point out that when I use the
+term 'NoSQL' I am specifically talking about non-ACID databases and not
+the absence of the SQL language. 'NoSQL' has become associated with
+'non-ACID' through an accident of history and imprecise marketing.
