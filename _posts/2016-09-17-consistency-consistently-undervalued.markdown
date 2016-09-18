@@ -13,17 +13,18 @@ the things you should understand well before you do.
 
 One of the most important things you lose in both cases are
 transactions. Transactions have been around so long and are so mundane
-that I think many developers have forgotten why they are so useful. It
-is the technology that allows you to maintain invariants on your
-data. For example, you can say if A is present, so is B and C. I hope
-we can first agree that an application that can safely assume the presence
-A, B and C together will be simpler and less likely to have bugs than an
+that I think many developers have forgotten why they are so useful.
+They can allow you to maintain invariants on your data. For example,
+you can say if A is present, so is B and C. I hope we can first agree
+that an application that can safely assume the presence A, B and C
+together will be simpler and less likely to have bugs than an
 application that has to handle any combination of A, B and C.
 
 ## User Profiles
 
-Here's a more concrete example: A user must have a profile. With
-transactions you can create them both together like in this pseudo-python:
+Here's a more concrete example of a constraint: A user must have a
+profile. With transactions you can create them both together like in
+this pseudo-python:
 
 {% highlight python %}
 # Either a user and profile are created together, or nothing is created
