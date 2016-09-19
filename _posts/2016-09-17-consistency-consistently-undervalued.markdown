@@ -147,15 +147,30 @@ to say that if you have the option, ACID transactions are usually
 simpler than eventual consistency or distributed transactions.
 
 A few people dislike the bank example because real world banks use
-eventual consistency. First of all, I agree (from experience)
+eventual consistency.
+
+First of all, I agree (from experience)
 with [4ad](https://news.ycombinator.com/item?id=12521059) that this is
-not the greatest counter-argument against ACID. Secondly, the real
-world banking system is (hopefully) well thought through and
-understood. I doubt they had the option of a central ACID database,
-because if they did I'm sure they would have taken it.
+not the greatest counter-argument against ACID.
+
+Secondly, the real world banking system is (hopefully) well thought
+through and understood. I doubt they had the option of a central ACID
+database, because if they did I'm sure they would have taken
+it. Distributed data pushes a great deal of complexity to your
+application layer.
+
+Thirdly, the example was to show potential financial consequences for
+ignoring consistency issues. It was not intended to be a tutorial on
+how to implement a bank.
 
 There was [some discussion](https://news.ycombinator.com/item?id=12520036)
 on the term 'NoSQL'. I would like to point out that when I use the
 term 'NoSQL' I am specifically talking about non-ACID databases and not
 the absence of the SQL language. 'NoSQL' has become associated with
 'non-ACID' through an accident of history and imprecise marketing.
+
+Thorsten Möller mentions (via email) that it is important to
+understand isolation, the 'I' of ACID. Even ACID databases do not
+always fully enforce isolation in their default configuration. Check
+out the PostgesSQL documentation for more information
+on [isolation levels](https://www.postgresql.org/docs/current/static/transaction-iso.html).
