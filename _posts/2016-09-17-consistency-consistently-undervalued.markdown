@@ -137,6 +137,14 @@ touched on referential integrity or other kinds of constraints!
 In conclusion, if you use micro-services or NoSQL databases, do your
 homework! Choose appropriate boundaries for your systems.
 
+## Further Reading
+
+* [Wikipedia's entry on ACID](https://en.wikipedia.org/wiki/ACID)
+* [CAP consistency vs. ACID consistency](http://hackingdistributed.com/2013/03/23/consistency-alphabet-soup/)
+* [PostgreSQL documentation on isolation levels](https://www.postgresql.org/docs/current/static/transaction-iso.html)
+* [How CockroachDB does distributed transactions](https://www.cockroachlabs.com/blog/how-cockroachdb-distributes-atomic-transactions/)
+* [Google's 'Spanner' paper](http://static.googleusercontent.com/media/research.google.com/en//archive/spanner-osdi2012.pdf)
+
 ## Errata and Feedback
 
 On Hacker News *vidarh* holds the opinion that
@@ -154,10 +162,10 @@ with [4ad](https://news.ycombinator.com/item?id=12521059) that this is
 not the greatest counter-argument against ACID.
 
 Secondly, the real world banking system is (hopefully) well thought
-through and understood. I doubt they had the option of a central ACID
-database, because if they did I'm sure they would have taken
-it. Distributed data pushes a great deal of complexity to your
-application layer.
+through and understood. Don't think of this article as advocating ACID
+versus eventual consistency, think of it as advocating a proper
+understanding of your tools. That said, ACID is usually the simpler
+solution.
 
 Thirdly, the example was to show potential financial consequences for
 ignoring consistency issues. It was not intended to be a tutorial on
