@@ -1,0 +1,367 @@
+---
+layout: article
+title: A Few Django ORM Mistakes
+description: Some code snippets with mistakes. Can you spot them?
+scripts:
+    - /reveal.js
+---
+<style>
+    .hidden .hide { display: none; }
+    .hidden h3 { cursor: pointer; }
+    figure .changed { background-color: yellow; }
+</style>
+
+
+<h1>A Few Django ORM Mistakes</h1>
+<p>
+    See if you can figure out what's wrong with the code snippets below! Ask yourself what
+    the problem is, what effect will it have, and how can you fix it?
+</p>
+<p>
+    These examples are for Django, but probably apply to many other ORMs.
+</p>
+
+
+<h2>Bug 1</h2>
+{% highlight python %}
+def create():
+    with transaction.atomic():
+        thing = Thing.objects.create(foo=1, bar=1)
+        set_foo(thing.id)
+        thing.bar = 2
+        thing.save()
+
+def set_foo(id):
+    thing = Thing.objects.get(id=id)
+    thing.foo = 2
+    thing.save()
+{% endhighlight %}
+<div class="hidden">
+    <h3>Hint</h3>
+    <div class="hide">
+        <p>The <code>save</code> method saves <em>all</em> attributes.</p>
+    </div>
+</div>
+<div class="hidden">
+    <h3>Solution</h3>
+    <div class="hide">
+        <p>
+            The problem with this code is that two Python instances of the same database row exist.
+            Here's the annotated source:
+        </p>
+{% highlight python %}
+def create():
+    with transaction.atomic():
+        # Create database row foo=1 bar=1
+        thing = Thing.objects.create(foo=1, bar=1)
+        set_foo(thing.id)
+        # The database row has been updated with foo=2 bar=1, but this
+        # instance still has foo=1 bar=1 as it hasn't been reloaded
+        thing.bar = 2
+        thing.save()  # Writes foo=1 bar=2
+        # The foo=2 write has been lost
+
+def set_foo(id):
+    # Look up the same Thing, but create a new instance
+    thing = Thing.objects.get(id=id)
+    thing.foo = 2
+    thing.save()  # Writes foo=2, bar=1
+{% endhighlight %}
+        <p>
+            The result is a single <code>Thing</code> with a <code>foo</code>
+            of <code>1</code> and a <code>bar</code> of <code>2</code>. A write has been
+            lost!
+        </p>
+        <p>Here's one possible fix:</p>
+        <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">create</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
+        <span class="n">thing</span> <span class="o">=</span> <span class="n">Thing</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">set_foo</span><span class="p">(</span><span class="changed n">thing</span><span class="p">)</span>
+        <span class="n">thing</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">thing</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">set_foo</span><span class="p">(</span><span class="changed n">thing</span><span class="p">):</span>
+    <span class="n">thing</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">thing</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></figure>
+    </div>
+</div>
+
+
+<h2>Bug 2</h2>
+{% highlight python %}
+class Thing(Model):
+    foo = ...
+    bar = ...
+
+def thing_set_foo(id, value):
+    thing = Thing.objects.get(id=id)
+    thing.foo = value
+    thing.save()
+
+def thing_set_bar(id, value):
+    thing = Thing.objects.get(id=id)
+    thing.bar = value
+    thing.save()
+{% endhighlight %}
+<div class="hidden">
+    <h3>Hint</h3>
+    <div class="hide">
+        <p>Assume <code>thing_set_foo</code> and <code>thing_set_bar</code> can happen simultaneously.</p>
+    </div>
+</div>
+<div class="hidden">
+    <h3>Solution</h3>
+    <div class="hide">
+        <p>
+            It's possible for a thread to read from the database just before a write happens
+            in another thread, resulting in the following situation:
+        </p>
+        <img src="/img/articles/orm/bug2.svg" />
+        <p>Here's one possible solution:</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">thing_set_foo</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">thing</span> <span class="o">=</span> <span class="n">Thing</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">thing</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">thing</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="changed n">update_fields</span><span class="o">=</span><span class="p">[</span><span class="changed s">"foo"</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">thing_set_bar</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">thing</span> <span class="o">=</span> <span class="n">Thing</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">thing</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">thing</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="changed n">update_fields</span><span class="o">=</span><span class="p">[</span><span class="changed s">"bar"</span><span class="p">])</span></code></pre></figure>
+    </div>
+</div>
+
+
+<h2>Bug 3</h2>
+{% highlight python %}
+def increment(id)
+    counter = Counter.objects.get(id=id)
+    counter.count = counter.count + 1
+    counter.save()
+{% endhighlight %}
+<div class="hidden">
+    <h3>Solution</h3>
+    <div class="hide">
+        <p>
+            This is very much like bug 2, but the twist is that the <code>increment</code>
+            function can conflict with itself. If called in two different threads,
+            even though <code>increment</code> is called twice the total may still only be 1.
+        </p>
+        <img src="/img/articles/orm/bug3.svg" />
+        <p>One way to fix this is to make the increment operation <em>atomic</em>.</p>
+        <img src="/img/articles/orm/bug3-solution.svg" />
+        <p>The way to do this in the Django ORM is to use <code>F</code> objects:</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">counter</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="changed n">F</span><span class="changed p">(</span><span class="changed s">'count'</span><span class="changed p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">counter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></figure>
+    </div>
+</div>
+
+
+<h2>Isolation Levels</h2>
+<h3>READ COMMITTED Isolation Level</h3>
+<p>
+    This is the default for PostgreSQL. Transactions can read updates from other
+    transactions after they have been committed.
+</p>
+<img src="/img/articles/orm/read-committed.svg" />
+<h3>REPEATABLE READ Isolation Level</h3>
+<p>
+    This is the default for MySQL. A <em>snapshot</em> is established on the first read in
+    the transaction, and all subsequent reads are from the snapshot.
+</p>
+<img src="/img/articles/orm/repeatable-read.svg" />
+<p>Going forward, assume we are using MySQL in its default configuration.</p>
+
+
+<h2>Bug 4</h2>
+{% highlight python %}
+def state_transition(id):
+    with transaction.atomic():
+        stateful = Stateful.objects.get(id=id)
+        if stateful.state == DONE:
+            raise AlreadyDone
+        do_state_transition()
+        stateful.state = DONE
+        stateful.save()
+{% endhighlight %}
+<div class="hidden">
+    <h3>Solution</h3>
+    <div class="hide">
+        <p>
+            It is possible for <code>do_state_transition</code> to be executed twice if
+            the state transition is executed concurrently. This could be a problem if your
+            state transition includes side effects!
+        </p>
+        <img src="/img/articles/orm/bug5.svg" />
+        <p>One simple solution to this problem is to lock the object:</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">state_transition</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
+        <span class="n">stateful</span> <span class="o">=</span> <span class="n">Stateful</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="changed n">select_for_update</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stateful</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">DONE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AlreadyDone</span>
+        <span class="n">do_state_transition</span><span class="p">()</span>
+        <span class="n">stateful</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">DONE</span>
+        <span class="n">stateful</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></figure>
+        <p>But, generally, you should try to avoid doing side effects in transactions!</p>
+    </div>
+</div>
+
+
+<h2>Bug 5</h2>
+{% highlight python %}
+def create_payment(collection_id, amount):
+    with transaction.atomic():
+        payment_collection = PaymentCollection.objects.get(id=collection_id)
+        Payment.objects.create(
+            amount=amount, payment_collection=payment_collection)
+        payment_collection.total = (
+            payment_collection.payment_set.all()
+              .aggregate(total=Sum('amount'))['total'])
+        payment_collection.save()
+{% endhighlight %}
+<div class="hidden">
+    <h3>Solution</h3>
+    <div class="hide">
+        <p>
+            If executed concurrently, one transaction will not see the newly created <code>Payment</code>
+            in the other transaction. The last write will win and the total will be inconsistent.
+        </p>
+        <img src="/img/articles/orm/bug4.svg" />
+        <p>
+            In addition to that, in MySQL this can potentially <em>deadlock</em> causing
+            your transaction to roll back entirely! Creating the <code>Payment</code>
+            causes a lock that blocks the aggregation read.
+        </p>
+        <p>Both issues can be fixed by locking the model being updated (<em>not</em> the payment!) at the start of the transaction:</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">create_payment</span><span class="p">(</span><span class="n">collection_id</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
+        <span class="n">payment_collection</span> <span class="o">=</span> <span class="p">(</span><span class="n">PaymentCollection</span><span class="o">.</span><span class="n">objects</span>
+                                <span class="o">.</span><span class="changed n">select_for_update</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">collection_id</span><span class="p">))</span>
+        <span class="n">Payment</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">,</span> <span class="n">payment_collection</span><span class="o">=</span><span class="n">payment_collection</span><span class="p">)</span>
+        <span class="n">payment_collection</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">payment_collection</span><span class="o">.</span><span class="n">payment_set</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+              <span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">Sum</span><span class="p">(</span><span class="s">'amount'</span><span class="p">))[</span><span class="s">'total'</span><span class="p">])</span>
+        <span class="n">payment_collection</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></figure>
+        <p>Or, alternatively, making the update atomic:</p>
+{% highlight python %}
+def create_payment(collection_id, amount):
+    payment_collection = PaymentCollection.objects.get(id=collection_id)
+    Payment.objects.create(amount=amount, payment_collection=payment_collection)
+    with connection.cursor() as cursor:
+        cursor.execute("""
+        UPDATE payment_collection,
+               (SELECT payment_collection_id, sum(amount) AS total
+                FROM payment
+                GROUP BY payment_collection__id) totals
+        SET payment_collection.total = totals.total
+        WHERE totals.pc_id = pc.id
+          AND pc.id = %s
+        """, [payment_collection.id])
+{% endhighlight %}
+        <p>Note that this cannot be in a transaction, or the <em>deadlock</em> issues will remain!</p>
+        <p>In my opinion, the safest way to do this is by using a SQL view instead of storing the total. Views can be awkward to use with Django unfortunately.</p>
+{% highlight sql %}
+CREATE VIEW payment_collection_totals
+  SELECT payment_collection_id, SUM(amount) AS total
+  FROM payment
+  GROUP BY payment_collection_id
+
+CREATE VIEW payment_collection_with_total
+  SELECT payment_collection.*, COALESCE(totals.total, 0) AS total
+  FROM payment_collection
+  LEFT JOIN totals ON (totals.payment_collection_id = payment_collection.id)
+{% endhighlight %}
+    </div>
+</div>
+
+
+<h2>Bug 6</h2>
+{% highlight python %}
+def foo(id):
+    with transaction.atomic():
+        foo = Foo.objects.get(id=id)
+        bar = Bar.objects.create(...)
+
+        with lock():
+            foo.refresh_from_db()
+
+            # If foo.bar has already been set in another thread,
+            # raise an exception and rollback the transaction
+            if foo.bar:
+                raise Exception
+
+            foo.bar = bar
+            foo.save()
+{% endhighlight %}
+<div class="hidden">
+    <h3>Hint</h3>
+    <div class="hide">
+        <p>This is a bug in MySQL, but not PostgreSQL.</p>
+    </div>
+</div>
+<div class="hidden">
+    <h3>Solution</h3>
+    <div class="hide">
+        <p>
+            This bug is a result of the REPEATABLE READ isolation level. The read after
+            the transaction starts establishes a snapshot, so
+            when <code>refresh_from_db</code> is performed after waiting for a lock, the
+            snapshot is read, not the most recent value.
+        </p>
+        <p>
+            This means when the <code>foo.bar</code> check is performed, we are checking
+            potentially stale data. This can cause multiple <code>Bar</code> to be
+            created, but only one of them linked to the correct <code>Foo</code>.
+        </p>
+        <p>
+            Confusingly, replacing <code>with lock()</code> with
+            a <code>select_for_update()</code> will work for MySQL, because MySQL has a
+            weird quirk where locked reads <em>do not</em> read from the snapshot. When
+            using REPEATABLE READ with PostgreSQL, this will throw an error instead.
+        </p>
+        <p>
+            The preferred way is to either move the lock to the top, outside of the
+            transaction, or using <code>select_for_update()</code> as follows:
+        </p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
+        <span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="changed n">select_for_update</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+        <span class="n">bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+        <span class="c"># If foo.bar has already been set in another thread,</span>
+        <span class="c"># raise an exception and rollback the transaction</span>
+        <span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">Exception</span>
+
+        <span class="n">foo</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="n">bar</span>
+        <span class="n">foo</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></figure>
+    </div>
+</div>
+
+
+<h2>Tips</h2>
+<ul>
+    <li>Remember the ORM is an in-memory cache.</li>
+    <li>ORMs can obscure bugs. Look at the SQL!</li>
+    <li>Avoid read-modify-write</li>
+    <ul>
+        <li>If you don't you'll probably need a lock.</li>
+    </ul>
+    <li>If it's not locked, it's not up to date.</li>
+    <li>Lock before reads to avoid weird MySQL behaviour.</li>
+    <ul>
+        <li>Locking reads don't use the snapshot in MySQL.</li>
+    </ul>
+    <li>Prefer immutable database design if practical.</li>
+    <ul>
+        <li>See: <a href="/articles/immutable-data/">Immutable Data</a>.</li>
+    </ul>
+    <li>Consider using a serializable isolation level.</li>
+    <ul>
+        <li>You don't have to worry about locking if you use serializable transactions.</li>
+        <li>Has other drawbacks.</li>
+        <li>PostgreSQL implementation is nicer than the MySQL one IMO.</li>
+    </ul>
+</ul>

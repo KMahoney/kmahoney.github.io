@@ -1,0 +1,38 @@
+<svg version="1.1" width="400" height="220" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* <![CDATA[ */
+    text { font-family: sans-serif; font-size: 14px; }
+    .ann { font-size: 10px; font-style: italic; }
+    .head  { font-size: 12px; font-weight: bold; }
+    /* ]]> */
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+    </marker>
+  </defs>
+
+  <line x1="200" y1="30" x2="200" y2="180" stroke-width="2" stroke="black" marker-end="url(#arrow)" />
+
+  <text x="200" y="20" text-anchor="middle">total → 0</text>
+  <text x="200" y="210" text-anchor="middle">total → 4</text>
+  <text x="100" y="40" text-anchor="middle" class="head">T1</text>
+  <text x="300" y="40" text-anchor="middle" class="head">T2</text>
+
+  <g text-anchor="middle" transform="translate(100 90)">
+    <text y="0">BEGIN</text>
+    <text y="20">CREATE amount &#8788; 3</text>
+    <text y="40">READ total → 3</text>
+    <text y="60">WRITE total ← 3</text>
+    <text y="80">COMMIT</text>
+  </g>
+
+  <g text-anchor="middle" transform="translate(300 110)">
+    <text y="0">BEGIN</text>
+    <text y="20">CREATE amount &#8788; 4</text>
+    <text y="40">READ total → 4</text>
+    <text y="60">WRITE total ← 4</text>
+    <text y="80">COMMIT</text>
+  </g>
+
+</svg>
