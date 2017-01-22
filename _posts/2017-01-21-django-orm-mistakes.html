@@ -341,6 +341,28 @@ def foo(id):
 </div>
 
 
+<h2>How Common Are These Bugs?</h2>
+<p>
+    These bugs are simplified versions of bugs found in production code, and written by
+    experienced Django developers. Remember, these bugs <em>won't</em> be as easy to spot
+    as they are here. They can be buried deep in between hundreds of lines of code.
+</p>
+<p>
+    After spending a very short time looking at a few open source Django projects, I can tell
+    that these bugs are common. There are probably a few reasons for this:
+</p>
+<ul>
+    <li>Thinking about concurrency is just <em>hard</em>.</li>
+    <li>Developers are not taking enough time to understand the underlying database technology.</li>
+    <li>In most cases the lost writes will happen very rarely.</li>
+    <li>When they do happen they are often relatively harmless.</li>
+    <li>It's a silent failure. How would you tell if your app was losing an occasional write?</li>
+</ul>
+<p>
+    So it's your call if you want to ignore these problems. But if you decide you don't care, please don't write financial or medical software. ;)
+</p>
+
+
 <h2>Tips</h2>
 <ul>
     <li>Remember the ORM is an in-memory cache.</li>
