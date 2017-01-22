@@ -204,6 +204,23 @@ def state_transition(id):
         <span class="n">stateful</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">DONE</span>
         <span class="n">stateful</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></figure>
         <p>But, generally, you should try to avoid doing side effects in transactions!</p>
+        <h3>Optimistic Locking</h3>
+        <p>
+            Another way of handling this is to use <em>optimistic locking</em>. Instead of
+            naively saving every value, optimistic locking tries to update with
+            a <code>WHERE state &#8800; DONE</code> clause. This will first lock the
+            database row and read in the latest state (updates do not use the snapshot)
+            before updating. If no rows are successfully updated (i.e. the row has already
+            transitioned) then the transaction is rolled back.
+        </p>
+        <p>
+            There are two caveats to optimistic locking. The first is that if your
+            transition has side effects it won't help you, and the second is that if you
+            take other locks in the transaction you must avoid deadlocks.
+        </p>
+        <p>
+            This is the approach taken by the <a href="https://github.com/kmmbvnr/django-fsm#optimistic-locking">django-fsm</a> library.
+        </p>
     </div>
 </div>
 
