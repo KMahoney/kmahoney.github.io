@@ -126,9 +126,10 @@ time where your data is inconsistent.
 
 As we can see, compensating for the loss of ACID is not an easy task.
 
-You may be able to think of other strategies not covered here, but I
-think you will find that they all have issues, and none are simpler or
-easier than an ACID database. Distributed data is a fundamentally
+You may be able to think of other strategies not covered here, but
+these kinds of workarounds in the application layer are not going to
+work short of recreating a half-working, buggy version of a
+distributed ACID database. Distributed data is a fundamentally
 difficult problem, and you should not take it on without understanding
 the complexity you are introducing.
 
@@ -145,12 +146,12 @@ homework!
 
 ## Errata and Feedback
 
-On Hacker News *vidarh* holds the opinion that
-[consistency is overvalued](https://news.ycombinator.com/item?id=12519985).
-I'd like to emphasise that I'm not against using distributed systems
-as long as the resulting problems are well understood. I'd also like
-to say that if you have the option, ACID transactions are usually
-simpler than eventual consistency or distributed transactions.
+On Hacker News *vidarh* holds the opinion
+that [consistency is overvalued](https://news.ycombinator.com/item?id=12519985). I'd like to emphasise that I'm
+not against using non-ACID or distributed systems as long as the
+resulting problems are well understood. I'd also like to say that if
+you have the option, using an ACID database is usually the solution
+easiest to get correct.
 
 Thorsten Möller mentions (via email) that it is important to
 understand isolation, the 'I' of ACID. Even ACID databases do not
