@@ -143,6 +143,11 @@ time { font-size: 0.8em; }
         margin-bottom: 0.8em;
         background-color: #EEEEF3;
     }
+
+    &.popular h3::before {
+        content: "★ ";
+        color: #c6bf53;
+    }
 }
 
 .disclaimer {

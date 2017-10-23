@@ -2,6 +2,7 @@
 layout: article
 title: Tests vs Types
 description: When should you use tests and when should you use types? What information and guarantees do we get for our efforts?
+popular: true
 ---
 
 # Tests vs. Types

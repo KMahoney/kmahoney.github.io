@@ -2,6 +2,7 @@
 layout: article
 title: "Consistency is Consistently Undervalued"
 description: Transactions are mundane and commonplace. Have we forgotten why they're useful?
+popular: true
 ---
 
 # Consistency is Consistently Undervalued

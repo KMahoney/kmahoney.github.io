@@ -33,7 +33,7 @@ description: Personal homepage of Kevin Mahoney
 
   {% for post in site.posts %}
   {% unless post.archived %}
-  <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
+  <article class="article{% if post.popular %} popular{% endif %}" itemscope itemtype="http://schema.org/BlogPosting">
     <h3><a href="{{ post.url }}" itemprop="url">{{ post.title }}</a></h3>
     <time itemprop="datePublished">{{ post.date | date_to_long_string }}</time>
     <div class="description">

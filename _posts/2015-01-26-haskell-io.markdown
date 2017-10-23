@@ -2,6 +2,7 @@
 layout: article
 title: Haskell IO Without the M-word
 description: A brief introduction to IO in Haskell.
+popular: true
 ---
 
 # Haskell IO Without the M-word
