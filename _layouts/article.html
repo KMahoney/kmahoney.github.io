@@ -4,6 +4,11 @@ layout: base
 <article class="article" itemscope itemtype="http://schema.org/BlogPosting" id="{{ page.title | slugify }}">
   <div itemprop="articleBody">
     <time itemprop="datePublished">{{ page.date | date_to_long_string }}</time>
+    {% if page.hidden %}
+    <aside>
+      <p>This post has been hidden as it is considered either out of date or low quality. You can still link directly to it.</p>
+    </aside>
+    {% endif %}
     {{ content }}
   </div>
   <aside class="disclaimer">

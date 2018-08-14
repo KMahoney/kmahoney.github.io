@@ -4,7 +4,8 @@ description: Personal homepage of Kevin Mahoney
 ---
 <section>
   {% for post in site.posts %}
-  <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
+  {% unless post.hidden %}
+  <article class="article{% if post.popular %} popular{% endif %}" itemscope itemtype="http://schema.org/BlogPosting">
     <h3><a href="{{ post.url }}" itemprop="url">{{ post.title }}</a></h3>
     <time itemprop="datePublished">{{ post.date | date_to_long_string }}</time>
     <div class="description">
@@ -13,5 +14,6 @@ description: Personal homepage of Kevin Mahoney
       </p>
     </div>
   </article>
+  {% endunless %}
   {% endfor %}
 </section>

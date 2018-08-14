@@ -3,6 +3,7 @@ layout: article
 title: Explain Why
 description: Two essential developer skills.
 archived: true
+hidden: true
 ---
 
 # Explain Why

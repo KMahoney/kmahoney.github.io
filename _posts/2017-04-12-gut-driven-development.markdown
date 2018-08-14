@@ -2,6 +2,8 @@
 layout: article
 title: Gut Driven Development
 description: How common biases influence development.
+archived: true
+hidden: true
 ---
 
 # Gut Driven Development

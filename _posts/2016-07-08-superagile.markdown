@@ -3,6 +3,7 @@ layout: article
 title: Superagile
 description: A simplified manifesto
 archived: true
+hidden: true
 ---
 
 # Superagile
