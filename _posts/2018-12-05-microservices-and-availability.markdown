@@ -18,11 +18,11 @@ of the system.**
 
 Take the example where service C depends on services A and B, either in breadth:
 
-<img src="/img/articles/microservice-pattern-1.svg" />
+<img width="150" height="125" src="/img/articles/microservice-pattern-1.svg" />
 
 or in depth:
 
-<img src="/img/articles/microservice-pattern-2.svg" />
+<img width="180" height="50" src="/img/articles/microservice-pattern-2.svg" />
 
 In terms of probabilities, if C requires both A **and** B to be
 available and, for example, we say at any point they each have a 0.9
@@ -42,7 +42,7 @@ able to produce a useful result when A or B are not available.
 
 Here are a few diagrams from worst availability to best availabilty:
 
-<img src="/img/articles/availability-diagrams.svg" />
+<img width="700" height="105" src="/img/articles/availability-diagrams.svg" />
 
 I'm sure this will be obvious to many, but I have often encountered
 the opinion that microservices are magic and will somehow solve
