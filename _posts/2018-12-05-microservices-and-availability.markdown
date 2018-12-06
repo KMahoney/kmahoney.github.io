@@ -8,8 +8,8 @@ description: A quick word on how adding microservices can decrease availability.
 
 I often hear the claim that microservices improve availability and
 reliability. It can be true when they are done well, but when these
-systems are built naively it actually reduces availability and
-reliability.
+systems are built naively, adding services actually reduces
+availability and reliability.
 
 The networks that connect services and the services themselves are
 unreliable. **If you require all your services to be available to
@@ -24,8 +24,8 @@ or in depth:
 
 <img src="/img/articles/microservice-pattern-2.svg" />
 
-In terms of probabilities, if C requires both A and B to be available
-to function and, for example, we say at any point they each have a 0.9
+In terms of probabilities, if C requires both A **and** B to be
+available and, for example, we say at any point they each have a 0.9
 independent probability of availability, C will effectively have a 0.9
 x 0.9 x 0.9 = 0.73 probability of being available.
 
@@ -39,6 +39,10 @@ availability, your service will *never* be available in the worst case!
 
 In order to increase availability and improve reliability, C must be
 able to produce a useful result when A or B are not available.
+
+Here are a few diagrams from worst availability to best availabilty:
+
+<img src="/img/articles/availability-diagrams.svg" />
 
 I'm sure this will be obvious to many, but I have often encountered
 the opinion that microservices are magic and will somehow solve
