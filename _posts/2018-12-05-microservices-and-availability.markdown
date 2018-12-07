@@ -6,17 +6,22 @@ description: A quick word on how adding microservices can decrease availability.
 
 # Microservices and Availability
 
-I often hear the claim that microservices improve availability and
-reliability. It can be true when they are done well, but when these
-systems are built naively, adding services actually reduces
-availability and reliability.
+I often hear the claim that microservices improve
+availability. However, when these systems are built naively, adding
+services actually reduces availability.
 
 The networks that connect services and the services themselves are
 unreliable. **If you require all your services to be available to
 function then adding additional services will reduce the availability
-of the system.**
+of the system.** Or in terms of individual services, **the more
+services your service depends on, the less available your service will
+be.**
 
-Take the example where service C depends on services A and B, either in breadth:
+When people are splitting up a service in to smaller services, they
+rarely seem to consider that they might be making things worse.
+
+How much worse does it make things? Take the example where service C
+depends on services A and B, either in breadth:
 
 <img width="150" height="125" src="/img/articles/microservice-pattern-1.svg" />
 
@@ -34,11 +39,13 @@ with 90% availability, you have a ceiling of 73% availability (on
 average - if you're lucky and the failures overlap it's still 90%, if
 you're unlucky it's 70%).
 
-This gets worse quite quickly. If you rely on ten services with 90%
-availability, your service will *never* be available in the worst case!
+This gets even worse quite quickly. If you rely on ten services with
+90% availability, your service will *never* be available in the worst
+case!
 
-In order to increase availability and improve reliability, C must be
-able to produce a useful result when A or B are not available.
+In order to increase availability and improve reliability, C must
+remove its dependency on A and B, and be able to produce a useful
+result when they are not available.
 
 Here are a few diagrams from worst availability to best availabilty:
 
