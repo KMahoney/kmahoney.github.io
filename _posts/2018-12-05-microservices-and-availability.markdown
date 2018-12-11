@@ -17,11 +17,12 @@ of the system.** Or in terms of individual services, **the more
 services your service depends on, the less available your service will
 be.**
 
-When people are splitting up a service in to smaller services, they
-rarely seem to consider that they might be making things worse.
+It doesn't matter how robust you make the dependency, if it's
+not available 100% of the time it will always have a detrimental effect,
+and when the network is involved you cannot acheive 100%.
 
-How much worse does it make things? Take the example where service C
-depends on services A and B, either in breadth:
+Take the example where service C depends on services A and B, either
+in breadth:
 
 <img width="150" height="125" src="/img/articles/microservice-pattern-1.svg" />
 
@@ -43,19 +44,18 @@ This gets even worse quite quickly. If you rely on ten services with
 90% availability, your service will *never* be available in the worst
 case!
 
+<img width="700" height="150" src="/img/articles/availability-diagrams.svg" />
+
 In order to increase availability and improve reliability, C must
 remove its dependency on A and B, and be able to produce a useful
 result when they are not available.
 
-Here are a few diagrams from worst availability to best availabilty:
+Another example: If you're refactoring a monolith in to microservices
+and splitting up a service with 99% availability in to two services,
+you need both of the new services to have 99.5% availability in order
+to break even.  Anything less and you'll be making things worse. I
+hope you have no-downtime deployments!
 
-<img width="700" height="105" src="/img/articles/availability-diagrams.svg" />
-
-I'm sure this will be obvious to many, but I have often encountered
-the opinion that microservices are magic and will somehow solve
-availability problems. In practice, I have seen them make availability
-worse more often than I've seen them make it better.
-
-P.S. Microservices will not magically help you 'scale' either.
-
-P.P.S. Please check my maths.
+A microservice architecture will not magically give you more
+availability. For that matter, it won't magically give you scalability
+either, but that's for another post.

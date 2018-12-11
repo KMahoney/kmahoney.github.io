@@ -1,4 +1,4 @@
-<svg version="1.1" width="2000" height="300" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" width="1400" height="300" xmlns="http://www.w3.org/2000/svg">
   <style>
     /* <![CDATA[ */
     text { font-family: sans-serif; font-size: 20px; }
@@ -63,12 +63,8 @@
     <text text-anchor="middle" x="150" y="290">73%</text>
   </g>
 
-  <!-- 2OR -->
+  <!-- 1AND -->
   <g  transform="translate(700 0)">
-    <g transform="translate(10 10)">
-      <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
-      <text text-anchor="middle" x="40" y="45">90%</text>
-    </g>
     <g transform="translate(110 10)">
       <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
       <text text-anchor="middle" x="40" y="45">90%</text>
@@ -77,39 +73,12 @@
       <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
       <text text-anchor="middle" x="40" y="45">90%</text>
     </g>
-    <text text-anchor="middle" x="150" y="170">OR</text>
-    <line x1="150" y1="150" x2="90" y2="105" stroke="black" stroke-width="2" fill="black" marker-end="url(#arrow)" />
-    <line x1="150" y1="150" x2="150" y2="105" stroke="black" stroke-width="2" fill="black" marker-end="url(#arrow)" />
-    <text text-anchor="middle" x="150" y="290">89.1%</text>
-  </g>
-
-  <!-- 3OR -->
-  <g transform="translate(1050 0)">
-    <g transform="translate(10 10)">
-      <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
-      <text text-anchor="middle" x="40" y="45">90%</text>
-    </g>
-    <g transform="translate(110 10)">
-      <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
-      <text text-anchor="middle" x="40" y="45">90%</text>
-    </g>
-    <g transform="translate(210 10)">
-      <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
-      <text text-anchor="middle" x="40" y="45">90%</text>
-    </g>
-    <g transform="translate(110 180)">
-      <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
-      <text text-anchor="middle" x="40" y="45">90%</text>
-    </g>
-    <text text-anchor="middle" x="150" y="170">OR</text>
-    <line x1="150" y1="150" x2="90" y2="105" stroke="black" stroke-width="2" fill="black" marker-end="url(#arrow)" />
-    <line x1="150" y1="150" x2="210" y2="105" stroke="black" stroke-width="2" fill="black" marker-end="url(#arrow)" />
-    <line x1="150" y1="150" x2="150" y2="105" stroke="black" stroke-width="2" fill="black" marker-end="url(#arrow)" />
-    <text text-anchor="middle" x="150" y="290">89.9%</text>
+    <line x1="150" y1="180" x2="150" y2="105" stroke="black" stroke-width="2" fill="black" marker-end="url(#arrow)" />
+    <text text-anchor="middle" x="150" y="290">81%</text>
   </g>
 
   <!-- SINGLE -->
-  <g transform="translate(1400 0)">
+  <g transform="translate(1050 0)">
     <g transform="translate(110 180)">
       <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2" rx="10" ry="10" style="filter:url(#dropshadow)" />
       <text text-anchor="middle" x="40" y="45">90%</text>
