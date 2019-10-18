@@ -27,7 +27,7 @@ description: Personal homepage of Kevin Mahoney
   <h2 id="articles">Articles</h2>
 
   {% for post in site.posts %}
-  {% unless post.archived or post.hidden %}
+  {% unless post.archived or post.hidden or post.draft %}
   <article class="article{% if post.popular %} popular{% endif %}" itemscope itemtype="http://schema.org/BlogPosting">
     <h3><a href="{{ post.url }}" itemprop="url">{{ post.title }}</a></h3>
     <time itemprop="datePublished">{{ post.date | date_to_long_string }}</time>
