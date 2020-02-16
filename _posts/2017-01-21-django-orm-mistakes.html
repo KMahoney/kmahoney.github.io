@@ -78,7 +78,7 @@ def set_foo(id):
     <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
         <span class="n">thing</span> <span class="o">=</span> <span class="n">Thing</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">set_foo</span><span class="p">(</span><span class="changed n">thing</span><span class="p">)</span>
-        <span class="n">thing</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">thing</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="mi">3</span>
         <span class="n">thing</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">set_foo</span><span class="p">(</span><span class="changed n">thing</span><span class="p">):</span>
