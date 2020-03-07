@@ -40,12 +40,13 @@ h1, h2, h3, h4 { color: #000; }
 h1, h2 {
     clear: both;
     border-bottom: 1px solid #AAA;
+    padding-bottom: 0.2em;
 }
 
 h1 {
     margin: 0em 0em 0.615em 0em;
     font-size: 2.6em;
-    line-height: 1.846em;
+    line-height: 1.3em;
 }
 
 h2 {
