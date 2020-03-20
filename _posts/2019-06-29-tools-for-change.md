@@ -2,6 +2,7 @@
 layout: article
 title: Tools for Change
 description: Evaluating technologies by their ability to handle change.
+archived: true
 ---
 
 # Tools for Change

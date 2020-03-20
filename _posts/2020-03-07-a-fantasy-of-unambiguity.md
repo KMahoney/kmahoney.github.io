@@ -2,6 +2,7 @@
 layout: article
 title: A Fantasy of Unambiguity
 description: Shouting into the wind about taxonomy.
+archived: true
 ---
 # A Fantasy of Unambiguity
 
