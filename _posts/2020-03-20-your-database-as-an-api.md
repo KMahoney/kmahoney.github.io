@@ -17,6 +17,10 @@ Your database should be appropriately structured as it grows to
 contain and encapsulate complexity, just like you would with your
 code.
 
+The mess you see is often the result of treating your database as a
+dumb store of data, with the organisation only done at the code
+level. However, I would argue...
+
 ## Your Database IS an API
 
 In web development the term 'API' has become practically synonymous
