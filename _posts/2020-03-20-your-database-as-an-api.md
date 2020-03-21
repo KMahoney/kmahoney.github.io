@@ -11,7 +11,7 @@ named tables which themselves have poorly named fields and haphazardly
 specified relationships. Sometimes this is a developer's first
 experience with a large database and they are permanently soured.
 
-<img style="display: block; max-width: 100%; margin: 2em auto;" src="/img/articles/dbapi/mess.png" />
+<img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/dbapi/mess.png' | absolute_url }}" />
 
 Your database should be appropriately structured as it grows to
 contain and encapsulate complexity, just like you would with your
@@ -44,7 +44,7 @@ encapsulate internal details, and have a backwards compatible
 PostgreSQL [schemas](https://www.postgresql.org/docs/12/ddl-schemas.html) can be
 used to group together tables.
 
-<img style="display: block; max-width: 100%; margin: 2em auto;" src="/img/articles/dbapi/schemas.png" />
+<img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/dbapi/schemas.png' | absolute_url }}" />
 
 ### 'Public' Views
 
@@ -54,12 +54,12 @@ help give your database more structure.
 Designate a selection of them as 'public' and keep them backwards compatible. Think of them
 as a public API. Which is what they are!
 
-<img style="display: block; max-width: 100%; margin: 2em auto;" src="/img/articles/dbapi/view.png" />
+<img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/dbapi/view.png' | absolute_url }}" />
 
 This allows you to change the internals of your schema and maintain
 backwards compatibility.
 
-<img style="display: block; max-width: 100%; margin: 2em auto;" src="/img/articles/dbapi/diff.png" />
+<img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/dbapi/diff.png' | absolute_url }}" />
 
 ### 'Private' Tables and Views
 
@@ -70,7 +70,7 @@ Potentially, each sub-system of your application could have its own
 database user that has internal access to a few relevant schemas, and
 access to all public views.
 
-<img style="display: block; max-width: 100%; margin: 2em auto;" src="/img/articles/dbapi/privilege.png" />
+<img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/dbapi/privilege.png' | absolute_url }}" />
 
 ### Documentation
 
