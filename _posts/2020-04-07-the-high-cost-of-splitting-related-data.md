@@ -87,8 +87,11 @@ can also result in over-fetching from the database.
 
 ## Why Do Developers Do This?
 
-I think this is often an attempt to contain complexity by
-misapplying concepts from Object Orientated Programming.
+Sometimes this happens by dogmatically following the 'one database per
+service' microservice pattern without thinking through the consequences.
+
+More charitably, I think this is often an attempt to contain
+complexity by misapplying concepts from Object Orientated Programming.
 
 OOP teaches that data should be private and that there should be a
 public interface that operates on that data. Here, tables are seen as
