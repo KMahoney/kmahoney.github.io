@@ -10,7 +10,7 @@ Consider the following simple architecture:
 
 <img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/split/split-original.png' | absolute_url }}" />
 
-The two tables in the database are related. I use 'related' loosely:
+The tables in the database are related. I use 'related' loosely:
 there could be a foreign key from one table to another, maybe a shared
 identifier. To generalise, it is data that tends to be combined when
 queried.
@@ -19,7 +19,7 @@ A common anti-pattern I see is to split the data like this:
 
 <img style="display: block; max-width: 60%; margin: 2em auto;" src="{{ '/img/articles/split/split-plus1.png' | absolute_url }}" />
 
-Notice how the relationship between the tables has been pushed up from
+Notice how the relationship between two related tables has been pushed up from
 the database layer to the application layer.
 
 This is often detrimental to reliability, performance, correctness,
