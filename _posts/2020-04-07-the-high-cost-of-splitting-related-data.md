@@ -15,7 +15,7 @@ there could be a foreign key from one table to another, maybe a shared
 identifier. To generalise, it is data that tends to be combined when
 queried.
 
-A common anti-pattern I see is to split the data like this:
+A common anti-pattern I see is to break up related data:
 
 <img style="display: block; max-width: 60%; margin: 2em auto;" src="{{ '/img/articles/split/split-plus1.png' | absolute_url }}" />
 
@@ -34,8 +34,8 @@ Consider this pattern repeated further:
 Here we see 11 network requests, 5 databases, and 6 servers, compared
 to the two network requests, single database, and server of the original.
 
-If we consider each request to have a 99% chance of success, then the
-original will have a 98% (0.99<sup>2</sup>) success rate and this new example will have a
+If we consider each individual request to independently have a 99% chance of success, then the
+original top level request will have an accumulated 98% (0.99<sup>2</sup>) success rate and this new example will have a
 90% success rate (0.99<sup>11</sup>). This gets worse every time the pattern is
 extended.
 
@@ -63,7 +63,8 @@ Changes to the structure of the data can result in multiple changes to dependent
 
 <img style="display: block; max-width: 100%; margin: 2em auto;" src="{{ '/img/articles/split/split-interfaces.png' | absolute_url }}" />
 
-This can really slow down development and cause bugs!
+This can really slow down development and cause bugs! The fewer APIs between you and
+your data the better.
 
 ## Incorrectness
 
@@ -96,7 +97,9 @@ complexity by misapplying concepts from Object Orientated Programming.
 OOP teaches that data should be private and that there should be a
 public interface that operates on that data. Here, tables are seen as
 internal data and APIs are seen as a public interface to that
-data. Exposing internal detail is a sin!
+data. Exposing internal detail is considered a sin!
+
+But this is a broken analogy.
 
 Without going in to a general critique of OOP, of which there are
 already plenty, the problem is that relational data naturally resists
