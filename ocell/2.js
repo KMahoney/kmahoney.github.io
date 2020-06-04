@@ -1,0 +1,3 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{14:function(e,n,i){"use strict";i.r(n),
+// @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
+n.default=async(e={})=>new Promise(n=>{const i=document.createElement("input");i.type="file";const t=[...e.mimeTypes?e.mimeTypes:[],e.extensions?e.extensions.map(e=>"."+e):[]].join();i.multiple=e.multiple||!1,i.accept=t||"*/*",i.addEventListener("change",()=>{n(i.multiple?i.files:i.files[0])}),i.click()})}}]);
