@@ -1,3 +1,3 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{17:function(t,e,i){"use strict";i.r(e);
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{18:function(t,e,i){"use strict";i.r(e);
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 const r=async(t,e,i=[])=>{for await(const s of t)s.isFile?i.push(await s.getFile()):s.isDirectory&&e&&await r(await s.getEntries(),e,i);return i};e.default=async(t={})=>{t.recursive=t.recursive||!1,t.multiple=t.multiple||!1;try{const e=await window.chooseFileSystemEntries({type:"open-directory",multiple:t.multiple});if(t.multiple){const i=[];for(const s of e){const e=await s.getEntries();i.push(await r(e,t.recursive))}return i}const i=await e.getEntries();return await r(i,t.recursive)}catch(t){throw t}}}}]);
