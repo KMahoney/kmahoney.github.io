@@ -2,6 +2,7 @@
 layout: article
 title: "Database Design: Heterogeneous Collections"
 description: A common problem in database design is heterogeneous collections or references. How do we model this?
+archived: true
 ---
 
 # Heterogeneous Collections

@@ -2,6 +2,7 @@
 layout: article
 title: Your Database as an API
 description: A brief suggestion on how to structure a large database.
+archived: true
 ---
 
 # Your Database as an API

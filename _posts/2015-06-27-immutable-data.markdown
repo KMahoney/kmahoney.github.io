@@ -2,6 +2,7 @@
 layout: article
 title: "Database Design: Immutable Data"
 description: The advantages and disadvantages of a keeping data around, including a simple blog application example in PostgreSQL.
+archived: true
 redirect_from: 
   - /articles/log-orientated-data/
 ---
