@@ -101,10 +101,13 @@ blockquote {
         font-size: 4em;
         top: -0.2em;
     }
-    p {
+    p, footer {
         display: block;
         padding: 0em 0em 0em 3.2em;
         margin: 0;
+    }
+    footer {
+        margin-top: 0.8em;
     }
 }
 
