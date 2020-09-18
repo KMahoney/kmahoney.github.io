@@ -6,21 +6,18 @@ description: These are my personal principles for building software.
 
 # My Principles for Building Software
 
-These are my personal principles for building software. There can be
+These are my personal principles for building software. I hope to frequently update them as my views change. There can be
 valid reasons for breaking them (they are *principles*, not *laws*), but in general I believe following
-them gives good results.
+them works out well.
 
 Most of them revolve around making the system simpler in some way. It's
 my belief that simpler systems are more reliable, easier and quicker to modify,
 and generally easier to work with.
 
-I hope to frequently update and expand upon this article.
-
 * [Make Invalid States Unrepresentable](#make-invalid-states-unrepresentable)
 * [Data Consistency Makes Systems Simpler](#data-consistency-makes-systems-simpler)
 * [Design "Data First"](#design-data-first)
 * [Measure Before You Cut](#measure-before-you-cut)
-* [Prefer Correctness and Simplicity Over Performance](#prefer-correctness-and-simplicity-over-performance)
 * [Avoid Trading Local Simplicity for Global Complexity](#avoid-trading-local-simplicity-for-global-complexity)
 * [Recognise Intrinsic Complexity](#recognise-intrinsic-complexity)
 * [Fewer Technologies Result in Simpler Systems](#fewer-technologies-result-in-simpler-systems)
@@ -33,20 +30,22 @@ I hope to frequently update and expand upon this article.
 I have put this first because I think it is one of the most important
 and most powerful principles.
 
-You often hear this in relation to designing your program's types, but
+You may have heard this phrase in relation to designing your program's types, but
 the principle applies everywhere you represent data - for example database design.
 
 Not only does this reduce the number of states
-your system can be in (and thus make it simpler) but it reduces the
+your system can be in (and thus make it simpler), but it reduces the
 number of _invalid_ states, which is even better! Your system does not
 have to handle these states because they literally cannot be
-represented in your program. This is not just a minor convenience,
-it can drastically simplify your system.
+represented in your program.
+
+This is not just a minor convenience, it can drastically simplify your system and prevent
+entire classes of bugs from occurring.
 
 ## Data Consistency Makes Systems Simpler
 
 Consistency enforces rules on your data, and so reduces the number
-of states your system needs to handle. This follows from the
+of states your system needs to handle. This follows on from the
 "make invalid states unrepresentable" principle.
 
 I am using consistency here in a very general sense: that your data
@@ -80,17 +79,25 @@ It is more complex to have:
 - A poor database design
 - Fewer (or no) data constraints
 
-Of course, there are valid reasons to make your system more complex and I don't
+Of course, there are valid reasons to make your system more complex, and I don't
 intend complexity to be a dirty word, but see ["measure before you cut"](#measure-before-you-cut).
 
-See [the appendix](#appendix-a-inconsistency-results-in-complexity) for an illustration on how inconsistency can cause complexity.
+I consider this principle to be one of the most undervalued in
+software engineering today. Consistency issues often go unrecognised.
+Many problems, I daresay *most* problems,
+are consistency issues at an essential level - data that does
+not conform to some expectation.
+
+See [the appendix](#appendix-a-inconsistency-results-in-complexity) for an illustration of how inconsistency can cause complexity.
 
 ## Design "Data First"
 
 What is more likely to be around in 10 years: your code or your data?
 
-Data is more important than code. Code can be thrown away and re-written.
-The only purpose of code is to transform data.
+Code can be thrown away and re-written, but this is rarely the case
+with data. 
+
+Data is more important than code. The only purpose of code is to transform data.
 
 When designing a new system, it's best to start with your database and
 your data structures and build your code on top of that. Consider
@@ -112,7 +119,7 @@ and I won’t usually need your flowcharts; they’ll be obvious</p>
 This is the most common mistake made by software developers.
 It's responsible for *many* self-inflicted problems.
 
-The principle is that when you make a trade-off that **has a significant cost**, ensure that
+The principle is that when you make a trade-off that has a complexity cost, ensure that
 the need for the trade-off is backed by emprical evidence.
 
 Common mistakes:
@@ -136,6 +143,8 @@ Advice:
   for the operations you want to perform.
 - It's true that sometimes experience alone can tell you if you're making the
   correct trade-off. It's still better if you can prove it.
+- When you have to choose, prefer correctness and simplicity over performance.
+- In some cases correct and simple code is the best performing code!
 
 <blockquote>
 <p>The real problem is that programmers have spent far too much time
@@ -145,25 +154,12 @@ it) in programming.</p>
 <footer><em>Donald Knuth</em></footer>
 </blockquote>
 
-## Prefer Correctness and Simplicity Over Performance
-
-Perhaps this is more context sensitive than other principles. There are
-projects where performance matters a great deal, such as
-game engines.
-
-Those exceptions noted, when faced with this dilemma trade-off towards correctness and simplicity.
-When more performance is *absolutely essential* and you start hitting
-limits, start thinking about going the other way.
-
-Don't fall in to the trap of thinking it's always one versus the other.
-In some cases correctness and simplicity are more performant, so win/win!
-
 ## Avoid Trading Local Simplicity for Global Complexity
 
 i.e. avoid making a part of the system simpler in exchange for making
 the system as a whole more complex.
 
-This trade is usually not an even one. Chasing local simplicity can
+This trade is usually not an even one. Chasing after local simplicity can
 cause and order of magnitude increase in global complexity.
 
 For example, smaller services can make those services simpler,
@@ -215,7 +211,7 @@ This is important for keeping the barrier to entry for understanding your code l
 
 Sometimes writing the consistent thing is more important than writing
 the "correct" thing. If you want to change the way something works in
-your codebase, change all instances of it.  Otherwise try to stick
+your codebase, change all instances of it.  Otherwise, try to stick
 with it.
 
 ## Shared Principles are Important
@@ -229,7 +225,7 @@ This is the simplest example I can think of to illustrate this principle.
 I hope it doesn't require too much imagination to relate to realistic
 problems.
 
-Consider a database with two Boolean variables `x` and `y`.  Your
+Consider a database with two Boolean variables `x` and `y`. Your
 application has a rule that `x = y`, and it can enforce this rule by
 using a transaction to atomically change both variables.
 
@@ -241,7 +237,7 @@ straightforward. You atomically read one of the values and set both
 values to the negation.
 
 Now consider what happens if you split those variables into their own
-databases. Let's assume you don't have distributed transactions.
+databases and they can no longer be atomically changed together.
 
 Because you can no longer consistently ensure that `x = y`, your data
 can be in two more states: `(x = True, y = False)` or `(x = False, y = True)`.
@@ -250,7 +246,7 @@ can be in two more states: `(x = True, y = False)` or `(x = False, y = True)`.
 - What should your 'toggle' function do in one of these states?
 - How do you ensure that both writes are successful when writing a new value?
 
-There is no correct answer to these questions.
+There are no correct answers to these questions.
 
 Of course, if we'd followed the ["make invalid states unrepresentable"](#make-invalid-states-unrepresentable) principle
 in the first place, there would only be one variable! :)
