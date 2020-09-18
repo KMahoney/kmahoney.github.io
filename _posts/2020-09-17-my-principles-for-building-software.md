@@ -114,6 +114,11 @@ and I won’t usually need your flowcharts; they’ll be obvious</p>
 <footer><em>Fred Brooks</em></footer>
 </blockquote>
 
+<blockquote>
+<p>Bad programmers worry about the code. Good programmers worry about data structures and their relationships.</p>
+<footer><em>Linus Torvalds</em></footer>
+</blockquote>
+
 ## Measure Before You Cut
 
 This is the most common mistake made by software developers.
