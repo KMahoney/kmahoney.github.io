@@ -103,22 +103,3 @@ of the data structure simpler. In this case, adding a new contract is
 simplified. You can ensure that the fixed contracts don't overlap with
 a database constraint and your constraints will hold. There is no need
 to modify start and end dates of default contracts.
-
-### You can't win 'em all
-
-So, if this is an easy win, why wasn't this representation adopted? 
-
-I wasn't given a definitive answer, so I can only take an educated
-guess. I think the biggest hurdle was "object-orientated" thinking.
-
-In this mindset, the fixed contracts are *objects*, default contracts are
-*objects*, and the database is considered a bag
-of bits for storing your *objects*.
-Each concept must be reified as a
-row in a table, and there is a distrust of using any features the database
-offers beyond storing or retrieving *objects*. This is a very atomistic approach.
-
-It may feel "simpler" on some level. It's certainly simple
-for the designer - database design is easy *if you just don't think
-about it*! However, as we see here, this lack of forethought inevitably
-leads to complexity. A stitch in time saves nine.
