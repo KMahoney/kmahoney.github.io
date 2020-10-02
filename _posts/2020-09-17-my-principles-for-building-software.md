@@ -42,6 +42,8 @@ represented in your program.
 This is not just a minor convenience, it can drastically simplify your system and prevent
 entire classes of bugs from occurring.
 
+I have put together [some examples](/articles/applying-misu/).
+
 ## Data Consistency Makes Systems Simpler
 
 Consistency enforces rules on your data, and so reduces the number
