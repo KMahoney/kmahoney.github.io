@@ -2,6 +2,7 @@
 layout: article
 title: My Principles for Building Software
 description: These are my personal principles for building software.
+popular: true
 ---
 
 # My Principles for Building Software

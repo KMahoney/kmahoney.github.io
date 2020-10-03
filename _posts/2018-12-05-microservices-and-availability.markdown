@@ -2,6 +2,7 @@
 layout: article
 title: Microservices and Availability
 description: A quick word on how adding microservices can decrease availability.
+archived: true
 ---
 
 # Microservices and Availability

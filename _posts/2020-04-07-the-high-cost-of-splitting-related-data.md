@@ -2,6 +2,7 @@
 layout: article
 title: The High Cost of Splitting Related Data
 description: Thoughts on an anti-pattern
+archived: true
 ---
 
 # The High Cost of Splitting Related Data
