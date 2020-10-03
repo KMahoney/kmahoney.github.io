@@ -30,7 +30,7 @@ timeline and overlapping periods:
 
 <img style="display: block; width: 100%; max-width: 20rem; margin: 2em auto;" src="{{ '/img/articles/misu/c3.png' | absolute_url }}" />
 
-### Improved representation
+### Improved Representation
 
 We can improve this representation so that the contiguous and
 non-overlapping constraints always hold, and we can do this in a way
@@ -56,34 +56,41 @@ constraints will still hold.
 
 ## Case 2: Default Contracts
 
-In this system, a customer pays us a recurring rent based upon a contract. Contracts
-last for a fixed amount of time, and when they expire we fall back to
-a 'default contract'. The customer can choose to extend or create a
-new contract.
+In this system, a customer pays us a recurring rent based upon a contract.
+Contracts last for a fixed amount of time, and when they expire we fall back to
+a 'default contract'. The customer can have many fixed contracts, and can
+sign new contracts at any time.
 
 This was represented as:
-- A table storing the customer start date, and optional end date.
-- A table storing the contract start date, optional end date, and if it was a 'fixed' or 'default' contract.
+- A 'customers' table storing
+  - The customer start date.
+  - An optional end date, should the customer leave.
+- A 'contracts' table storing
+  - The contract start date.
+  - An optional end date, for default contracts that don't end.
+  - If it was a 'fixed' or 'default' contract.
 
-<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto;" src="{{ '/img/articles/misu/f1.png' | absolute_url }}" />
+<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto 0em auto;" src="{{ '/img/articles/misu/f1.png' | absolute_url }}" />
+<div style="display: block; text-align: center; margin-bottom: 2em; font-size: 0.8rem;">Customer and contract timelines</div>
 
-One important constraint is that the customer should always have a
-contract. This representation can be improved in this regard, as it
-allows for gaps:
+This representation allows for some undesirable states that are trivial to prevent:
+- The customer may have gaps in their contracts.
+- A fixed contract may not have an end date.
 
-<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto;" src="{{ '/img/articles/misu/f2.png' | absolute_url }}" />
+<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto 0em auto;" src="{{ '/img/articles/misu/f2.png' | absolute_url }}" />
+<div style="display: block; text-align: center; margin-bottom: 2em; font-size: 0.8rem;">Contract gaps</div>
 
 To make matters worse, the API for these contracts allowed you to
-modify the start and end of individual contracts, violating this constraint, and pushing
-responsibility on to clients. This shows how a poor choice of
+modify each individual contract, fixed or default, without guarding against
+these states. This shows how a poor choice of
 representation propagates itself through the design of a system.
 
-This was not just a theoretical problem - the constraint was violated on more
-than one occasion, requiring hours of engineering effort to
-hunt down and fix.
+This poor choice was not just a theoretical problem -
+gaps in contracts were found on more than one occasion, requiring
+hours of engineering effort to hunt down and fix.
 
 
-### Improved representation
+### Improved Representation
 
 This is easily improved by removing the 'default' contracts from the
 contract table. If the customer doesn't have a fixed contract, it is
@@ -91,34 +98,36 @@ assumed they are on a default contract:
 
 <img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto;" src="{{ '/img/articles/misu/f3.png' | absolute_url }}" />
 
-Now there can no longer be any gaps, and there is an additional benefit 
-that the end date of a contract no longer needs to be optional.
+Now there can no longer be any gaps, and 
+the end date of a contract no longer needs to be optional as it only represents fixed contracts.
 
-If it's useful, this representation can be projected in to the previous
-representation using a database view.
+It's worth reiterating that this representation can be projected in to the previous
+representation using a database view if that form is more convenient. What is
+important is that the underlying representation enforces these constraints, it
+is not important how you view the data.
 
 As with the first case, a better representation makes the manipulation
-of the data structure simpler. In this case, adding a new contract is
-simplified. You can ensure that the fixed contracts don't overlap with
-a database constraint, and your constraints will hold. There is no need
-to modify start and end dates of default contracts.
+of the data structure simpler. In this case, adding a new fixed contract is
+greatly simplified. There is no need to create or modify default contracts, or ensure
+that the contracts are contiguous.
 
+### The Influence of Object-Orientated Thinking
 
-### OO's bad influence
-
-If this improvement seems obvious to you, you may wonder why the
+If this improvement seems obvious to you, you may wonder how the
 original design happened in the first place.
 
 I think this happens because of atomistic, object-orientated thinking.
 
-In this mindset, the fixed contracts are *objects*, default contracts are
-*objects*, and the database is considered a bag
-of bits for storing your *objects*.
-Each concept must be reified as a
-row in a table, and there is a distrust of using any features the database
+In this mindset, the fixed contracts are *objects*, the default contracts are
+*objects*, and each of these concepts must be reified as a row in a table and
+never inferred.
+There is a distrust of using any features the database
 offers beyond storing or retrieving *objects*.
 
-This may feel "simpler" on some level, as you don't really need
-to think about your database design.
+This approach is antithetical to quality relational design and
+the principle of making invalid states unrepresentable.
+
+It may feel "simpler" on some level, as you don't really need
+to think about your design.
 However, as we see here, this lack of forethought inevitably
 leads to complexity.
