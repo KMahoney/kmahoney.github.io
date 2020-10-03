@@ -4,6 +4,13 @@ title: Applying "Make Invalid States Unrepresentable"
 description: That is "Make Invalid States Unrepresentable"
 ---
 
+<style>
+.img-20 { display: block; width: 100%; max-width: 20rem; margin: 2em auto; }
+.img-30 { display: block; width: 100%; max-width: 30rem; margin: 2em auto; }
+.mb-0 { margin-bottom: 0; }
+.caption { display: block; text-align: center; margin-bottom: 2em; font-size: 0.8rem; }
+</style>
+
 # Applying "Make Invalid States Unrepresentable"
 
 Here are some real life cases of applying one of my
@@ -17,18 +24,18 @@ I'll try to update this as I come across good examples.
 A straightforward way to represent a period of time is by its start
 and end dates (`(Date, Date)`):
 
-<img style="display: block; width: 100%; max-width: 20rem; margin: 2em auto;" src="{{ '/img/articles/misu/c1.png' | absolute_url }}" />
+<img class="img-20" src="/img/articles/misu/c1.png" />
 
 If we need to represent a timeline split in to contiguous periods, it
 may be tempting to represent this as a sequence of periods (e.g. `List
 (Date, Date)`):
 
-<img style="display: block; width: 100%; max-width: 20rem; margin: 2em auto;" src="{{ '/img/articles/misu/c2.png' | absolute_url }}" />
+<img class="img-20" src="/img/articles/misu/c2.png" />
 
 However, with this representation there can be both gaps in the
 timeline and overlapping periods:
 
-<img style="display: block; width: 100%; max-width: 20rem; margin: 2em auto;" src="{{ '/img/articles/misu/c3.png' | absolute_url }}" />
+<img class="img-20" src="/img/articles/misu/c3.png" />
 
 ### Improved Representation
 
@@ -41,7 +48,7 @@ In a well formed contiguous timeline, the joint start/end
 of the adjacent periods are redundant. Contiguous, non-overlapping
 splits can simply be represented by a set of dates (`Set Date`):
 
-<img style="display: block; width: 100%; max-width: 20rem; margin: 2em auto;" src="{{ '/img/articles/misu/c4.png' | absolute_url }}" />
+<img class="img-20" src="/img/articles/misu/c4.png" />
 
 You can begin to see how this representation simplifies the system
 when you consider how to make a further split in the timeline. In the
@@ -70,15 +77,15 @@ This was represented as:
   - An optional end date, for default contracts that don't end.
   - If it was a 'fixed' or 'default' contract.
 
-<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto 0em auto;" src="{{ '/img/articles/misu/f1.png' | absolute_url }}" />
-<div style="display: block; text-align: center; margin-bottom: 2em; font-size: 0.8rem;">Customer and contract timelines</div>
+<img class="img-30 mb-0" src="/img/articles/misu/f1.png" />
+<div class="caption">Customer and contract timelines</div>
 
 This representation allows for some undesirable states that are trivial to prevent:
 - The customer may have gaps in their contracts.
 - A fixed contract may not have an end date.
 
-<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto 0em auto;" src="{{ '/img/articles/misu/f2.png' | absolute_url }}" />
-<div style="display: block; text-align: center; margin-bottom: 2em; font-size: 0.8rem;">Contract gaps</div>
+<img class="img-30 mb-0" src="/img/articles/misu/f2.png" />
+<div class="caption">Contract gaps</div>
 
 To make matters worse, the API for these contracts allowed you to
 modify each individual contract, fixed or default, without guarding against
@@ -96,7 +103,8 @@ This is easily improved by removing the 'default' contracts from the
 contract table. If the customer doesn't have a fixed contract, it is
 assumed they are on a default contract:
 
-<img style="display: block; width: 100%; max-width: 30rem; margin: 2em auto;" src="{{ '/img/articles/misu/f3.png' | absolute_url }}" />
+<img class="img-30 mb-0" src="/img/articles/misu/f3.png" />
+<div class="caption">Inferred default contracts</div>
 
 Now there can no longer be any gaps, and 
 the end date of a contract no longer needs to be optional as it only represents fixed contracts.
