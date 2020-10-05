@@ -119,12 +119,12 @@ of the data structure simpler. In this case, adding a new fixed contract is
 greatly simplified. There is no need to create or modify default contracts, or ensure
 that the contracts are contiguous.
 
-### The Influence of Object-Orientated Thinking
+### The Influence of Object-Oriented Thinking
 
 If this improvement seems obvious to you, you may wonder how the
 original design happened in the first place.
 
-I think this happens because of atomistic, object-orientated thinking.
+I think this happens because of atomistic, object-oriented thinking.
 
 In this mindset, the fixed contracts are *objects*, the default contracts are
 *objects*, and each of these concepts must be reified as a row in a table and
