@@ -121,21 +121,17 @@ that the contracts are contiguous.
 
 ### The Influence of Object-Oriented Thinking
 
-If this improvement seems obvious to you, you may wonder how the
-original design happened in the first place.
-
-I think this happens because of atomistic, object-oriented thinking.
+I think the original design happened because of atomistic, object-oriented thinking.
 
 In this mindset, the fixed contracts are *objects*, the default contracts are
 *objects*, and each of these concepts must be reified as a row in a table and
-never inferred.
-There is a distrust of using any features the database
-offers beyond storing or retrieving *objects*.
+never inferred. Rows are seen as a serialised object instead of a true proposition.
 
-This approach is antithetical to quality relational design and
-the principle of making invalid states unrepresentable.
+Using an object-oriented toolbox to design your database is
+[antithetical to quality relational design](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch)
+and the principle of making invalid states unrepresentable.
 
 It may feel "simpler" on some level, as you don't really need
-to think about your design.
+to think about how to map your database design to your in-memory representation;
 However, as we see here, this lack of forethought inevitably
 leads to complexity.
