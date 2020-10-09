@@ -2,6 +2,7 @@
 layout: article
 title: Applying "Make Invalid States Unrepresentable"
 description: That is "Make Invalid States Unrepresentable"
+popular: true
 ---
 
 <style>
