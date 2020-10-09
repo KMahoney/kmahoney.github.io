@@ -87,7 +87,7 @@ This representation allows for some undesirable states that are trivial to preve
 <img class="img-30 mb-0" src="/img/articles/misu/f2.png" />
 <div class="caption">Contract gaps</div>
 
-To make matters worse, the API for these contracts allowed you to
+To make matters worse, the API for these contracts allowed clients to
 modify each individual contract, fixed or default, without guarding against
 these states. This shows how a poor choice of
 representation propagates itself through the design of a system.
@@ -112,7 +112,7 @@ the end date of a contract no longer needs to be optional as it only represents 
 It's worth reiterating that this representation can be projected in to the previous
 representation using a database view if that form is more convenient. What is
 important is that the underlying representation enforces these constraints, it
-is not important how you view the data.
+is not important how that data is viewed.
 
 As with the first case, a better representation makes the manipulation
 of the data structure simpler. In this case, adding a new fixed contract is
@@ -127,11 +127,36 @@ In this mindset, the fixed contracts are *objects*, the default contracts are
 *objects*, and each of these concepts must be reified as a row in a table and
 never inferred. Rows are seen as a serialised object instead of a true proposition.
 
-Using an object-oriented toolbox to design your database is
+Using an object-oriented toolbox to design a database is
 [antithetical to quality relational design](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch)
 and the principle of making invalid states unrepresentable.
 
 It may feel "simpler" on some level, as you don't really need
-to think about how to map your database design to your in-memory representation;
+to think about how to map a database design to an in-memory representation;
 However, as we see here, this lack of forethought inevitably
 leads to complexity.
+
+### Further Improvements
+
+It was left unspecified if overlapping contracts are permitted, only that
+gaps aren't permitted. As it happens, this *was* a desirable constraint for this application
+and it was omitted from the first version of the article because the best solution is less clear cut.
+
+A simple solution is to enforce this by using an 'excludes' constraint in the
+database. This is perfectly acceptable, but also irrelevant to this article.
+
+A more interesting way of doing this is to allow for overlapping contracts in the
+write model, but flatten them in a projection for the read model. A fixed contract is
+terminated by the start date of its next overlapping fixed contract.
+
+<img class="img-30" src="/img/articles/misu/f4.png" />
+
+A nice side effect of this design is that information is never lost, and you
+don't need to mutate existing contracts to add new overlapping contracts.
+
+Another interesting, but in this case perhaps unsuitable, method might be to combine case 1
+and store a set of dates. Contract information is then associated with a particular date.
+
+<img class="img-30" src="/img/articles/misu/f5.png" />
+
+This may be relatively tricky to manage when inserting a new overlapping fixed contract.
