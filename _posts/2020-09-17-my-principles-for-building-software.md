@@ -51,6 +51,7 @@ Consistency enforces rules on your data, and so reduces the number
 of states your system needs to handle. This follows on from the
 "make invalid states unrepresentable" principle.
 
+### Definition
 I am using consistency here in a very general sense: that your data
 adheres to certain rules, and that it always obeys those rules
 at every point in time. This definition is related to ACID consistency, and shouldn't be confused with CAP consistency.
@@ -66,6 +67,7 @@ application utilising ACID transactions. It is preferable to enforce
 them at the database level, but this is not common practice for
 anything more complex than simple checks for practical reasons.
 
+### Practical Advice
 Anything which restricts or compromises consistency results in complexity.
 This leads to the following practical advice:
 
@@ -215,12 +217,14 @@ Focus on learning:
 
 ## Code Consistency is Important
 
-This is important for keeping the barrier to entry for understanding your code low.
-
 Sometimes writing the consistent thing is more important than writing
 the "correct" thing. If you want to change the way something works in
 your codebase, change all instances of it.  Otherwise, try to stick
 with it.
+
+The readability of your code has more to do with consistency than it
+does with any notion of simplicity. People understand code by
+pattern recognition, so repeat (and document) patterns!
 
 ## Shared Principles are Important
 
