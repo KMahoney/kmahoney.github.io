@@ -59,7 +59,7 @@ CREATE TABLE logblog.article_revision (
 );
 {% endhighlight %}
 
-Note the slug is no longer unique, so an article is updated by
+Note the slug is no longer unique. An article is updated by
 inserting a new `article_revision` with an existing slug.
 
 There are some existing databases based around this concept, including
@@ -73,7 +73,7 @@ Why would you want to do this?
 Immutable data in databases has all the same advantages as
 immutable data in general purpose languages. It is usually much
 easier to reason about than mutable state. See:
-[referential transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science)).
+[Referential Transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science)).
 
 This paragraph from the Datomic website explains other advantages of this
 approach quite well:
@@ -106,9 +106,11 @@ Of course, storing every change to the state instead of mutating data
 will require more persistent storage space. If you're only inserting
 data your storage requirements can only ever grow.
 
-In PostgreSQL the read queries will typically be more complicated and
-have worse performance. Theoretically this doesn't have to be the
-case. See the [Performance Improvements](#performance-improvements)
+In PostgreSQL, naive read queries that reduce events down into the
+current application state will often be more complicated and
+have worse performance; However, this can compensated for with some
+additional effort.
+See the [Performance Improvements](#performance-improvements)
 section for more details.
 
 ## An Immutable Blog Application in PostgreSQL
@@ -130,8 +132,8 @@ CREATE SCHEMA logblog;
 
 ### Article Table
 
-A table representing the set of article slugs. Foreign keys can use
-this as a reference to maintain referential integrity. PostgreSQL does
+A table representing the set of article slugs. Foreign keys can
+reference this to maintain integrity. PostgreSQL does
 not allow referencing the `slug` field in the `article_revision` table
 as it is not unique in that table.
 
@@ -161,7 +163,7 @@ CREATE TABLE logblog.article_revision (
 
 ### Publishing
 
-Now an immutable log of article publish events. The public will be
+Now for an immutable log of article publish events. The public will be
 able to see the last published version of an article. This means it is
 possible to publish an earlier revision to 'rollback' an article.
 
