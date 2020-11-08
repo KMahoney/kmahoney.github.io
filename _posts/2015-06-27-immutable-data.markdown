@@ -10,7 +10,7 @@ redirect_from:
 # Immutable Data
 
 In this article I'll be talking about the advantages and disadvantages
-of immutable data in databases, and walking through a simple blog
+of immutable data in databases. As a demonstration I'll walk through a simple blog
 application in PostgreSQL. I highly recommend this approach in many
 cases, but the standard 'caveat emptor' disclaimer applies. Be aware
 of the trade-offs you are making.
@@ -75,7 +75,7 @@ immutable data in general purpose languages. It is usually much
 easier to reason about than mutable state. See:
 [referential transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science)).
 
-This paragraph from the Datomic website explains other advantages this
+This paragraph from the Datomic website explains other advantages of this
 approach quite well:
 
 > How can data be immutable? Don't facts change? They don't, in fact,
