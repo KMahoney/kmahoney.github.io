@@ -52,9 +52,10 @@ of states your system needs to handle. This follows on from the
 "make invalid states unrepresentable" principle.
 
 ### Definition
-I am using consistency here in a very general sense: that your data
-adheres to certain rules, and that it always obeys those rules
-at every point in time. This definition is related to ACID consistency, and shouldn't be confused with CAP consistency.
+I am using consistency here in a general sense: that your data
+adheres to certain rules, and that it always obeys those rules at
+every point in time. This definition relates to ACID consistency, so
+don't confuse it with CAP consistency.
 
 The rules can be any pretty much anything, for example, 
 that your credit should never be able to go negative,
@@ -129,8 +130,8 @@ and I won’t usually need your flowcharts; they’ll be obvious</p>
 This is the most common mistake made by software developers.
 It's responsible for *many* self-inflicted problems.
 
-The principle is that when you make a trade-off that has a complexity cost, ensure that
-the need for the trade-off is backed by emprical evidence.
+The principle is that when you make a trade-off that has a complexity
+cost, ensure that empirical evidence backs the need for the trade-off.
 
 Common mistakes:
 
@@ -148,7 +149,7 @@ Advice:
 - Do not pay complexity costs or violate the other principles
   until it solves an actual problem, not an imaginary one.
 - Some optimisations can be made without measurement, because
-  they have very little or zero cost. For example, using the
+  they have little or zero cost. For example, using the
   correct data structures that support favourable performance
   for the operations you want to perform.
 - It's true that sometimes experience alone can tell you if you're making the
@@ -184,7 +185,7 @@ Any attempt to do so will ironically make your system more complex.
 
 ## Fewer Technologies Result in Simpler Systems
 
-It is better to understand a few technologies deeply than many
+It is better to understand fewer technologies deeply than many
 technologies at a surface level. Fewer technologies mean fewer
 things to learn, and less operational complexity.
 
@@ -194,7 +195,7 @@ Do not concern yourself too much with intricate details of the software you use 
 can always look them up. Learn the underlying fundamental concepts.
 
 Technologies change, concepts are eternal. The concepts you learn will
-be used in newer technologies, and you will be able to learn them much quicker.
+help with newer technologies, and you will be able to learn them much quicker.
 
 For example, do not concern yourself so much with the surface level
 details of React, Kubernetes, Haskell, Rust, etc.

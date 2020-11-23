@@ -16,7 +16,7 @@ taken the liberty of naming it myself. I'll update if I find one already in use.
 The state-diff pattern transforms an imperative interface into a declarative one,
 allowing the client to write pure, easily testable functions to describe
 the desired state of a system. This desired state is then compared with the
-actual state, and imperative actions are generated that reconcile the two.
+actual state, and it generates imperative actions that reconcile the two.
 
 <img class="img-30" src="/img/articles/statediff/statediff.png" />
 
@@ -39,5 +39,5 @@ expensive to check directly. The mirrored state can become out of sync
 with the actual state.
 
 In my opinion, the trade-off for a robust and testable system is
-usually worth it, but particular attention should be paid to the
+usually worth it, but pay particular attention to the
 correctness of the core diff and imperative logic.
