@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "The Role of the Database: A Subtle Impedance"
+title: A Subtle Impedance
 description: Thoughts on the object-relational impedance mismatch.
 ---
 
@@ -8,7 +8,7 @@ description: Thoughts on the object-relational impedance mismatch.
 .img-v10 { display: block; max-height: 10rem; margin: 2em auto; }
 </style>
 
-# The Role of the Database: A Subtle Impedance
+# A Subtle Impedance
 
 If you have read or participated in any discussion about
 [ORMs](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping),
@@ -17,18 +17,16 @@ you will have come across the
 which concerns reconciling an object-oriented view of data with a relational
 one. 
 
-This incompatibility has tormented me. I am convinced there are
-benefits to a well designed relational database, but it is
-difficult to realise them in conjunction with an ORM.
+The result of this mismatch is that an ORM can force compromise in
+your database design. So I thought that, if I worked on a project that
+didn't use an ORM, I'd be able to go all out on a relational design!
 
-When I began work in a team that doesn't use ORMs I thought that,
-finally, I can design an unimpeded relational database! But even then,
-I found myself bumping up against other developers. It seemed to me
-that there was something fundamentally different with how we viewed
-the role of the database. There was a similar, perhaps subtler,
-'impedance mismatch' reaching beyond mapping objects to tables.
+It turns out, even then, I found a lot of resistance to relational
+concepts in the team. It seemed to me that there was something
+fundamentally different with how we viewed the role of the
+database. There was a similar, perhaps subtler, 'impedance mismatch'.
 
-I have made a rough caricature of each view, with no attempt to be
+I have made a rough impression of each view, with no attempt to be
 impartial.
 
 ## "The Serialisation Layer"
@@ -51,18 +49,11 @@ impartial.
 - Views, stored procedures, and advanced database features are
   uncomfortable because they muddy the simple mapping between the data
   and the code.
+- Sympathetic to "one database per service" architectures.
 - ORMs are fine.
 
 This approach is comparable to object-oriented programming; state and
 behaviour are coupled together, and information is hidden.
-
-This doesn't mesh well with relational database design. To share data,
-either the data must be read via the process owning it, or the data
-needs to be copied. Both ways introduce needless inconsistency.
-
-Features of the database, such as filtering and joins, are frequently
-lifted to the application layer (and frequently implemented poorly,
-with worse data integrity).
 
 ## "The Logical System"
 
@@ -83,17 +74,9 @@ with worse data integrity).
 - Views and stored procedures are useful for building APIs.
 - ORMs are the devil.
 
-This is much closer to Codd's original vision of how a relational
-database should work, with sound underlying mathematical principles.
-
 There is no perceived ownership of data, and that is important, but don't
 mistake this for a free-for-all. API design and access control are
 still good things, but shared access is not a sin.
-
-Keeping the data together in this way allows for much simpler
-consistency without artificial transaction barriers. Solving problems
-inside the database can often be more efficient in terms of
-performance, and also in terms of developer time.
 
 ## Further Reading
 
