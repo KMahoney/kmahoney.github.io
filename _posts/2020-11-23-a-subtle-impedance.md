@@ -2,6 +2,8 @@
 layout: article
 title: A Subtle Impedance
 description: Thoughts on the object-relational impedance mismatch.
+archived: true
+hidden: true
 ---
 
 <style>
