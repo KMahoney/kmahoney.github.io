@@ -21,7 +21,7 @@ a {
 
 body {
     font-family: 'helvetica neue', helvetica, arial, 'lucida grande', sans-serif;
-    font-size: 100%;
+    font-size: 1em;
     line-height: 1.6;
 }
 
@@ -39,18 +39,16 @@ h1, h2, h3, h4 { color: #000; }
 
 h1, h2 {
     clear: both;
-    border-bottom: 1px solid #AAA;
-    padding-bottom: 0.2em;
 }
 
 h1 {
-    margin: 0em 0em 0.615em 0em;
-    font-size: 2.6em;
-    line-height: 1.3em;
+    margin: 0em 0em 0.4em 0em;
+    font-size: 2.5em;
+    line-height: 1.28em;
 }
 
 h2 {
-    margin: 2em 0em 1em 0em;
+    margin: 1.875em 0em 0.625em 0em;
     font-size: 1.6em;
 }
 
@@ -70,7 +68,7 @@ main {
     padding: 0px 10px;
 }
 
-p, ul { margin-bottom: 0.8em; }
+p, ul { margin-bottom: 1.6em; }
 header { padding: 1.6em 0em 1.6em 0em; }
 section article { margin-bottom: 1.6em; }
 
@@ -111,28 +109,23 @@ blockquote {
     }
 }
 
-time { font-size: 0.8em; }
-
-.project {
-    padding-left: 4em;
-
-    img {
-        position: absolute;
-        width: 3em;
-        height: 3em;
-        margin: 0em 0em 0em -4em;
-    }
-
-    h3 {
-        line-height: 1.6em;
-        margin-bottom: 0.4em;
-    }
+time {
+    display: block;
+    line-height: 2;
+    font-size: 0.8em;
 }
 
-@media (max-width: 700px) {
-    .project {
-        padding-left: 0em;
-        img { display: none; }
+
+.project {
+    ul {
+        margin: 0;
+        list-style: none;
+    }
+    a {
+        padding-left: 1em;
+        background: url(img/link.svg) no-repeat;
+        background-position: center left;
+        background-size: 0.8em;
     }
 }
 
@@ -161,6 +154,17 @@ time { font-size: 0.8em; }
     font-size: 0.8em;
     color: #555;
     background: url(/img/ic_info_black_24px.svg) 0.8em 0.8em no-repeat;
+}
+
+aside.hidden {
+    padding: 1em;
+    border-radius: 10px;
+    background: #CCC;
+    margin-bottom: 1.6em;
+
+    p {
+        margin-bottom: 0;
+    }
 }
 
 @import 'syntax';
