@@ -3,6 +3,7 @@ layout: article
 title: Editor Rewrite & Thoughts on PureScript
 description: An update on my structural editor, and thoughts on the PureScript language.
 archived: true
+hidden: true
 ---
 
 # Editor Rewrite & Thoughts on PureScript
