@@ -20,7 +20,7 @@ actual state, and it generates imperative actions that reconcile the two.
 
 <img class="img-30" src="/img/articles/statediff/statediff.png" />
 
-It has become especially useful in UI libraries like React, but also
+It has become especially useful in UI libraries like React, but it is also
 used in infrastructure tooling like Terraform, package management,
 database migrations, and more.
 
@@ -31,7 +31,7 @@ pure, declarative layer, saving you from the pain of manually writing state
 transformations.
 
 A potential downside is that if there is a bug in the diff or
-imperative layer, and the actions don't bring the actual state in line
+imperative layer and the actions don't bring the actual state in line
 with the desired state, it can cause escalating problems as each run
 tries and fails to correct the situation. Also, some implementations,
 such as React's virtual DOM, mirror the actual state because it is

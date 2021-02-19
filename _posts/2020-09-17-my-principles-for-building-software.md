@@ -32,7 +32,7 @@ I have put this first because I think it is one of the most important
 and most powerful principles.
 
 You may have heard this phrase in relation to designing your program's types, but
-the principle applies everywhere you represent data - for example database design.
+the principle applies everywhere you represent data -- for example database design.
 
 Not only does this reduce the number of states
 your system can be in (and thus make it simpler), but it reduces the
@@ -52,12 +52,13 @@ of states your system needs to handle. This follows on from the
 "make invalid states unrepresentable" principle.
 
 ### Definition
+
 I am using consistency here in a general sense: that your data
 adheres to certain rules, and that it always obeys those rules at
 every point in time. This definition relates to ACID consistency, so
 don't confuse it with CAP consistency.
 
-The rules can be any pretty much anything, for example, 
+The rules can be any pretty much anything; for example,
 that your credit should never be able to go negative,
 or that private posts should not be visible to others.
 It is not restricted to foreign keys or unique indexes, although
@@ -69,7 +70,9 @@ them at the database level, but this is not common practice for
 anything more complex than simple checks for practical reasons.
 
 ### Practical Advice
-Anything which restricts or compromises consistency results in complexity.
+
+Anything which restricts or compromises consistency
+[results in complexity](#appendix-a-inconsistency-results-in-complexity).
 This leads to the following practical advice:
 
 It is simpler to have:
@@ -91,10 +94,8 @@ intend complexity to be a dirty word, but see ["measure before you cut"](#measur
 I consider this principle to be one of the most undervalued in
 software engineering today. Consistency issues often go unrecognised.
 Many problems, I daresay *most* problems,
-are consistency issues at an essential level - data that does
+are consistency issues at an essential level -- data that does
 not conform to some expectation.
-
-See [the appendix](#appendix-a-inconsistency-results-in-complexity) for an illustration of how inconsistency can cause complexity.
 
 ## Design "Data First"
 
@@ -103,7 +104,7 @@ What is more likely to be around in 10 years: your code or your data?
 Code can be thrown away and re-written, but this is rarely the case
 with data. 
 
-Data is more important than code. The only purpose of code is to transform data.
+Data is more important than code. The purpose of code is to transform data.
 
 When designing a new system, it's best to start with your database and
 your data structures and build your code on top of that. Consider
@@ -130,8 +131,8 @@ and I won’t usually need your flowcharts; they’ll be obvious</p>
 This is the most common mistake made by software developers.
 It's responsible for *many* self-inflicted problems.
 
-The principle is that when you make a trade-off that has a complexity
-cost, ensure that empirical evidence backs the need for the trade-off.
+The principle is to ensure that empirical evidence backs the need for
+a trade-off.
 
 Common mistakes:
 
@@ -170,12 +171,12 @@ it) in programming.</p>
 i.e. avoid making a part of the system simpler in exchange for making
 the system as a whole more complex.
 
-This trade is usually not an even one. Chasing after local simplicity can
+This trade is usually not an even one; chasing after local simplicity can
 cause and order of magnitude increase in global complexity.
 
 For example, smaller services can make those services simpler,
 but the reduction in consistency and the need for more inter-process
-communication makes the system much more complicated.
+communication makes the system as a whole much more complicated.
 
 ## Recognise Intrinsic Complexity
 
@@ -191,7 +192,7 @@ things to learn, and less operational complexity.
 
 ## Focus Your Learning on Concepts, not Technologies
 
-Do not concern yourself too much with intricate details of the software you use - you
+Do not concern yourself too much with intricate details of the software you use -- you
 can always look them up. Learn the underlying fundamental concepts.
 
 Technologies change, concepts are eternal. The concepts you learn will

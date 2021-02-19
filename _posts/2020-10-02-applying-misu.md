@@ -19,7 +19,6 @@ Here are some real life cases of applying one of my
 
 I'll try to update this as I come across good examples.
 
-
 ## Case 1: Contiguous Time Periods
 
 A straightforward way to represent a period of time is by its start
@@ -42,10 +41,10 @@ timeline and overlapping periods:
 
 We can improve this representation so that the contiguous and
 non-overlapping constraints always hold, and we can do this in a way
-that may remind you of database normalisation - by removing
+that may remind you of database normalisation -- by removing
 redundancy.
 
-In a well formed contiguous timeline, the joint start/end
+In a well formed contiguous timeline the joint start/end
 of the adjacent periods are redundant. Contiguous, non-overlapping
 splits can simply be represented by a set of dates (`Set Date`):
 
@@ -64,9 +63,9 @@ constraints will still hold.
 
 ## Case 2: Default Contracts
 
-In this system, a customer pays us a recurring rent based upon a contract.
+In this system a customer pays us a recurring rent based upon a contract.
 Contracts last for a fixed amount of time, and when they expire we fall back to
-a 'default contract'. The customer can have many fixed contracts, and can
+a 'default contract'. The customer can have many fixed contracts, and they can
 sign new contracts at any time.
 
 This was represented as:
@@ -97,7 +96,6 @@ This poor choice was not just a theoretical problem -
 gaps in contracts were found on more than one occasion, requiring
 hours of engineering effort to hunt down and fix.
 
-
 ### Improved Representation
 
 This is easily improved by removing the 'default' contracts from the
@@ -107,16 +105,16 @@ assumed they are on a default contract:
 <img class="img-30 mb-0" src="/img/articles/misu/f3.png" />
 <div class="caption">Inferred default contracts</div>
 
-Now there can no longer be any gaps, and 
-the end date of a contract no longer needs to be optional as it only represents fixed contracts.
+Now there can no longer be any gaps, and the end date of a contract no
+longer needs to be optional as it only represents fixed contracts.
 
 It's worth reiterating that this representation can be projected in to the previous
 representation using a database view if that form is more convenient. What is
-important is that the underlying representation enforces these constraints, it
+important is that the underlying representation enforces these constraints; it
 is not important how that data is viewed.
 
-As with the first case, a better representation makes the manipulation
-of the data structure simpler. In this case, adding a new fixed contract is
+A better representation makes the manipulation
+of the data structure simpler. Adding a new fixed contract has been
 greatly simplified. There is no need to create or modify default contracts, or ensure
 that the contracts are contiguous.
 
@@ -134,17 +132,17 @@ and the principle of making invalid states unrepresentable.
 
 It may feel "simpler" on some level, as you don't really need
 to think about how to map a database design to an in-memory representation;
-However, as we see here, this lack of forethought inevitably
+however, as we see here, this lack of forethought inevitably
 leads to complexity.
 
 ### Further Improvements
 
 It was left unspecified if overlapping contracts are permitted, only that
 gaps aren't permitted. As it happens, this *was* a desirable constraint for this application
-and it was omitted from the first version of the article because the best solution is less clear cut.
+and it was omitted from the first version of the article because the best solution is not clear cut.
 
 A simple solution is to enforce this by using an 'excludes' constraint in the
-database. This is perfectly acceptable, but also irrelevant to this article.
+database. This is perfectly acceptable.
 
 A more interesting way of doing this is to allow for overlapping contracts in the
 write model, but flatten them in a projection for the read model. A fixed contract is
@@ -154,10 +152,3 @@ terminated by the start date of its next overlapping fixed contract.
 
 A nice side effect of this design is that information is never lost, and you
 don't need to mutate existing contracts to add new overlapping contracts.
-
-Another interesting, but in this case perhaps unsuitable, method might be to combine case 1
-and store a set of dates. Contract information is then associated with a particular date.
-
-<img class="img-30" src="/img/articles/misu/f5.png" />
-
-This may be relatively tricky to manage when inserting a new overlapping fixed contract.
