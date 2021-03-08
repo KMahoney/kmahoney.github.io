@@ -2,6 +2,7 @@
 layout: article
 title: Accidental Waterfall
 description: The line between agile and waterfall can be blurry.
+archived: true
 ---
 
 # Accidental Waterfall

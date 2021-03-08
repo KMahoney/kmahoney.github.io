@@ -2,6 +2,7 @@
 layout: article
 title: The State-Diff Pattern
 description: The state-diff pattern transforms an imperative interface into a declarative one.
+archived: true
 ---
 
 <style>
