@@ -2,6 +2,7 @@
 layout: article
 title: Alerts, Checklists, and Lazy Thinking
 description: The most important thing for useful alerts and checklists.
+archived: true
 ---
 
 # Alerts, Checklists, and Lazy Thinking
