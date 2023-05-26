@@ -2,6 +2,7 @@
 layout: article
 title: Effective Checklists
 description: A short list
+archived: true
 ---
 
 # Effective Checklists

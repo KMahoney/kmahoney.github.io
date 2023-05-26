@@ -2,6 +2,7 @@
 layout: article
 title: Files That Change Together Should Stick Together
 description: A heuristic for organising your file system.
+archived: true
 ---
 
 # Files That Change Together Should Stick Together
