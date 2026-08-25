@@ -2,6 +2,8 @@
 layout: article
 title: "Coding with Clay"
 description: "Collected thoughts on building software with AI."
+archived: true
+hidden: true
 ---
 
 # Coding with Clay
@@ -11,6 +13,7 @@ For me, building software has started to feel less like meticulously arranging L
 I'm sharing some thoughts on how we can still build quality software with these tools. If you use LLMs daily (or run your own [gas town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04)), none of this will be revolutionary. It will also be out of date in a month. I still think there’s value in writing down the intuition we are all quietly developing.
 
 ## Table of Contents
+
 - [Developing an Intuition](#developing-an-intuition)
 - [The LGTM Trap](#the-lgtm-trap)
 - [Context Is King](#context-is-king)
@@ -81,11 +84,11 @@ Making your communication available to AI agents, however, is a great idea. It a
 
 Skills that I think are becoming more important:
 
-* **Architectural Intuition**: Knowing where to separate components and how to produce minimal, stable interfaces.
-* **Constraint Design**: Setting effective constraints on the code. For example, effective testing, [making invalid states unrepresentable](/articles/applying-misu/), engineering fast feedback loops.
-* **Fundamental Concepts**: Deeply understanding the underlying concepts of technologies rather than just their surface-level implementation.
-* **Review Skills**: Reading code effectively and efficiently, and understanding the larger context.
-* **Effort Allocation**: What needs to be reviewed and thought about carefully, and what can be generated and forgotten about.
+- **Architectural Intuition**: Knowing where to separate components and how to produce minimal, stable interfaces.
+- **Constraint Design**: Setting effective constraints on the code. For example, effective testing, [making invalid states unrepresentable](/articles/applying-misu/), engineering fast feedback loops.
+- **Fundamental Concepts**: Deeply understanding the underlying concepts of technologies rather than just their surface-level implementation.
+- **Review Skills**: Reading code effectively and efficiently, and understanding the larger context.
+- **Effort Allocation**: What needs to be reviewed and thought about carefully, and what can be generated and forgotten about.
 
 Aesthetic coding - the skill of writing beautiful, elegant code purely for human readability - is becoming less important. It’s a shame because I was quite good at this. Readable code is still important for human review, but it will likely be generated going forward.
 
